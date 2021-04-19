@@ -67,9 +67,6 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
             }
             */
             //init(test);
-            getDb('flags');
-            getDb('contents');
-            getDb('contents1');
         });
 
 
@@ -620,6 +617,9 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
             });
         }
 
+        getDb('flags');
+        getDb('contents');
+        getDb('contents1');
         var dbName = 'kw_DB';
         var storeName = 'kw_storage';
 

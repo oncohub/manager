@@ -1,6 +1,46 @@
-<ion-view ng-controller="InfoCtrl"><ion-header-bar class="bar-positive"><h1 class="title info">Info</h1></ion-header-bar><ion-content style="background-color:#ecf1f7"><div class="item item-divider" style="border-top:0"></div><div class="padding" style="background-color:#fff;padding:30px 16px"><p><strong>Regimen Manager</strong> provides an easy way to browse chemotherapy regimens. <strong>Regimen Manager</strong> is freely available <strong>only in Kouseiren Tsurumi Hospital.</strong></p><ul><li><strong>Progressive:</strong> More functionality becoming available on subsequent visits.</li><li><strong>Network Independent:</strong> Function both offline and online as well as on flaky connections.</li><li><strong>Multi-platform support:</strong> Ensure consistent performance across multiple modern browsers and platforms.</li><li><strong>Searchable:</strong> Show the search result with the matching text highlighted across terms, grades, and definitions.</li></ul></div><!--
+<ion-view ng-controller="InfoCtrl">
+    <ion-header-bar class="bar-positive">
+        <h1 class="title info">Info</h1>
+    </ion-header-bar>
+    <ion-content style="background-color:#ecf1f7">
+        <div class="item item-divider" style="border-top:0"></div>
+        <div class="padding" style="background-color:#fff;padding:30px 16px">
+            <p><strong>Regimen Manager</strong> provides an easy way to browse chemotherapy regimens. <strong>Regimen
+                    Manager</strong> is freely available <strong>only in Kouseiren Tsurumi Hospital.</strong></p>
+            <ul>
+                <li><strong>Progressive:</strong> More functionality becoming available on subsequent visits.</li>
+                <li><strong>Network Independent:</strong> Function both offline and online as well as on flaky
+                    connections.</li>
+                <li><strong>Multi-platform support:</strong> Ensure consistent performance across multiple modern
+                    browsers and platforms.</li>
+                <li><strong>Searchable:</strong> Show the search result with the matching text highlighted across terms,
+                    grades, and definitions.</li>
+            </ul>
+        </div>
+        <!--
         <div class='item item-divider' style="border-top: 0px;"></div>
         <ion-item class="item-about item-icon-right" ui-sref="tabs.install">
             How to Use<i class="icon ion-ios-arrow-right icon-accessory"></i>
         </ion-item>
-        --><div class="item item-divider"></div><ion-item class="item-about item-icon-right" ui-sref="tabs.third">Libraries We Use <i class="icon ion-ios-arrow-right icon-accessory"></i></ion-item><ion-item class="item-about item-icon-right" ui-sref="tabs.term">Terms of Service<span ng-if="$storage.appBuild > $storage.currentBuild" style="display:inline-block;right:inherit;margin-left:10px" class="badge badge-assertive on-line" ng-bind="shareData.badge.update"></span> <i class="icon ion-ios-arrow-right icon-accessory"></i></ion-item><ion-item class="item-about item-icon-right" ui-sref="tabs.privacy">Privacy Policy<span ng-if="$storage.appBuild > $storage.currentBuild" style="display:inline-block;right:inherit;margin-left:10px" class="badge badge-assertive on-line" ng-bind="shareData.badge.update"></span> <i class="icon ion-ios-arrow-right icon-accessory"></i></ion-item><div class="item item-divider"></div><ion-item class="item-about item-icon-right" ng-click="shareData.removeFlags();">Remove Flags <a><i class="icon ion-ios-trash-outline" style="color:#666"></i></a></ion-item><ion-item class="item-about item-icon-right" ng-click="shareData.unregister()">Unregister / Remove cache <a><i class="icon ion-ios-trash-outline" style="color:#666"></i></a></ion-item><div class="item item-divider" style="border-bottom:0"></div></ion-content></ion-view>
+        -->
+        <div class="item item-divider"></div>
+        <ion-item class="item-about item-icon-right" ui-sref="tabs.third">Libraries We Use <i
+                class="icon ion-ios-arrow-right icon-accessory"></i></ion-item>
+        <ion-item class="item-about item-icon-right" ui-sref="tabs.term">Terms of Service<span
+                ng-if="$storage.appBuild > $storage.currentBuild"
+                style="display:inline-block;right:inherit;margin-left:10px" class="badge badge-assertive on-line"
+                ng-bind="shareData.badge.update"></span> <i class="icon ion-ios-arrow-right icon-accessory"></i>
+        </ion-item>
+        <ion-item class="item-about item-icon-right" ui-sref="tabs.privacy">Privacy Policy<span
+                ng-if="$storage.appBuild > $storage.currentBuild"
+                style="display:inline-block;right:inherit;margin-left:10px" class="badge badge-assertive on-line"
+                ng-bind="shareData.badge.update"></span> <i class="icon ion-ios-arrow-right icon-accessory"></i>
+        </ion-item>
+        <div class="item item-divider"></div>
+        <ion-item class="item-about item-icon-right" ng-click="shareData.removeFlags();">Remove Flags <a><i
+                    class="icon ion-ios-trash-outline" style="color:#666"></i></a></ion-item>
+        <ion-item class="item-about item-icon-right" ng-click="shareData.unregister()">Unregister / Remove cache <a><i
+                    class="icon ion-ios-trash-outline" style="color:#666"></i></a></ion-item>
+        <div class="item item-divider" style="border-bottom:0"></div>
+    </ion-content>
+</ion-view>
