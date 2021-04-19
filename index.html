@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=auto">
+    <meta name="description"
+        content="An easy way to browse Excel files">
+    <title>Manager</title>
+    <meta name="keywords"
+        content="">
+    <meta name="author" content="Koichiro Watanabe">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <!-- css -->
+    <link href="ionic/ionic.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- Add to home screen for Safari on iOS -->
+    <link rel="apple-touch-icon" href="images/icons/apple-touch-icon.png" />
+    <link rel="apple-touch-icon" sizes="57x57" href="images/icons/apple-touch-icon-57x57.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="images/icons/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon" sizes="76x76" href="images/icons/apple-touch-icon-76x76.png" />
+    <link rel="apple-touch-icon" sizes="114x114" href="images/icons/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon" sizes="120x120" href="images/icons/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon" sizes="144x144" href="images/icons/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon" sizes="152x152" href="images/icons/apple-touch-icon-152x152.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="images/icons/apple-touch-icon-180x180.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Manager">
+    <meta name="msapplication-TileImage" content="images/icons/msTile.png">
+    <meta name="msapplication-TileColor" content="#387ef5">
+    <meta name="theme-color" content="#0c60ee" />
+
+    <!-- Facebook and Twitter integration -->
+    <meta property="og:title" content="Manager" />
+    <meta property="og:description"
+        content="Excel file Manager" />
+    <meta property="og:image" content="images/800x800.jpg" />
+    <meta property="og:url" content="https://oncohub.github.io/manager/" />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="iCommuse.com" />
+    <meta property="og:description"
+        content="Excel file Manager" />
+    <meta name="twitter:title" content="Manager" />
+    <meta name="twitter:image" content="images/1024x512.jpg" />
+    <meta name="twitter:url" content="https://oncohub.github.io/manager/" />
+    <meta name="twitter:card" content="sammary" />
+
+    <!-- manifest here -->
+    <link rel="manifest" href="manifest.json">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-162770562-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-162770562-1');
+    </script>
+</head>
+<body ng-app="managerApp">
+    <script id="tabs.html" type="text/ng-template">
+        <ion-view>
+        <ion-tabs class="tabs-icon-top tabs-positive">
+            <ion-tab title="Home" icon-off="ion-ios-home-outline" icon-on="ion-ios-home" href="#/tabs/home">
+                <ion-nav-view name="tabs-home"></ion-nav-view>
+            </ion-tab>
+            <ion-tab title="Import" icon-off="ion-ios-download-outline" icon-on="ion-ios-download" href="#/tabs/about">
+                <ion-nav-view name="tabs-about"></ion-nav-view>
+            </ion-tab>
+            <ion-tab title="Info" icon-off="ion-ios-information-outline" icon-on="ion-ios-information" href="#/tabs/info">
+                <ion-nav-view name="tabs-info"></ion-nav-view>
+            </ion-tab>
+        </ion-tabs>
+    </ion-view>
+    </script>
+    <ion-nav-view animation="animation" class="selector"></ion-nav-view>
+    <!-- ionic/angularjs -->
+    <script src="ionic/angular/angular.min.js"></script>
+    <script src="ionic/angular/angular-animate.min.js"></script>
+    <script src="ionic/angular/angular-sanitize.min.js"></script>
+    <script src="ionic/ionic.min.js"></script>
+    <script src="ionic/ionic-angular.min.js"></script>
+    <script src="ionic/angular-ui/angular-ui-router.min.js"></script>
+    <script src="js/bowser.min.js"></script>
+    <script src="js/data.min.js"></script>
+    <script src="ionic/ionic.filter.bar.min.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/xlsx.full.min.js"></script>
+    <noscript>Your browser does not support JavaScript!</noscript>
+    <script>
+       if ('serviceWorker' in navigator) {
+            navigator.serviceWorker
+                .register('service-worker.js', {
+                    scope: '/manager/'
+                })
+                .then(function (registration) {
+                    console.log("Service Worker Registered");
+                    registration.onupdatefound = function () {
+                        console.log('Update found');
+                    }
+                }).catch(function (error) {
+                    // registration failed
+                    console.log('Registration failed with ' + error);
+                });
+            navigator.serviceWorker.ready.then(function (registration) {
+                console.log('Service Worker Ready');
+            });
+
+            function swUnregister() {
+                navigator.serviceWorker.getRegistrations().then(function (registrations) {
+                    for (let registration of registrations) {
+                        registration.unregister();
+                    }
+                }).then(function () {
+                    console.log("Service Worker Unregistered");
+                }).catch(function (error) {
+                    // registration failed
+                    alert('Unregistration failed with ' + error);
+                });
+                caches.keys().then(function (cacheNames) {
+                    cacheNames.forEach(function (cacheName) {
+                        caches.delete(cacheName);
+                    });
+                }).then(function () {
+                    console.log("Cashe Removed");
+                }).catch(function (error) {
+                    // registration failed
+                    alert('Cashe Removal failed with ' + error);
+                });
+            }
+        }
+        let refreshing;
+        navigator.serviceWorker.addEventListener('controllerchange', function () {
+            if (refreshing) return;
+            window.location.reload();
+            refreshing = true;
+        });    </script>
+</body>
+
+</html>

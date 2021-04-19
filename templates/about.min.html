@@ -1,0 +1,11 @@
+<ion-view ng-controller="PsCtrl">
+    <ion-header-bar class="bar-positive">
+        <h1 class="title info">File Import</h1>
+    </ion-header-bar>
+    <ion-content style="padding:5px" id="ps">
+        <div class="padding">
+            <p><b>レジメン管理ファイル(.xlsx)を選択してください</b></p><input type="file" id="xlsx" name="xlsx"
+                on-change="shareData.fileNameChanged">
+        </div>
+    </ion-content>
+</ion-view>
