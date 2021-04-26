@@ -158,9 +158,10 @@ angular.module('app', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
             var group = null;
             var deleteKey = null;
             console.log("output", output);
-            console.log(Object.keys(output[0]), Object.values(output[0]));
+            console.log(Object.keys(output[0]));
             try {
-                $scope.shareData.headerKeys = Object.keys(output[0]).filter(function(val, i) {
+                var objKeys0 = Object.keys(output[0]);
+                $scope.shareData.headerKeys = objKeys0.filter(function(val, i) {
                     if (val === $scope.shareData.unique) {
                         deleteKey = i;
                         return false;
@@ -168,9 +169,12 @@ angular.module('app', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                         return true;
                     }
                 })
-                $scope.shareData.headerValues = Object.values(output[0]).filter(function(val, i) {
+                $scope.shareData.headerValues = objKeys0.map(function(key) {
+                    return output[0][key];
+                  }).filter(function(val, i) {
                     return i !== deleteKey;
                 });
+                console.log("output1",objKeys0, $scope.shareData.headerValues);
                 console.log("$scope.shareData.headerValues", $scope.shareData.headerValues);
                 var invisibleKey = null;
                 $scope.shareData.headerValues.forEach(function(val, i) {
@@ -268,8 +272,11 @@ angular.module('app', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
             var group1 = null;
 
             var lookupValue = 0;
-            $scope.shareData.headerValues1 = Object.values(output1[0]);
+
             $scope.shareData.headerKeys1 = Object.keys(output1[0]);
+            $scope.shareData.headerValues1 = $scope.shareData.headerKeys1.map(function(e) {
+                return output1[0][e]
+              });
             $scope.shareData.lookupKey = $scope.shareData.headerKeys1[lookupValue];
             $scope.shareData.rawList1 = angular.copy(output1.slice(1));
             $scope.shareData.itemList1 = $scope.shareData.rawList1;
@@ -848,9 +855,9 @@ angular.module('app', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                     $scope.shareData.subterm = null;
                     $scope.shareData.group = null;
                     var group = null;
-
                     var deleteKey = null;
-                    $scope.shareData.headerKeys = Object.keys(output[0]).filter(function(val, i) {
+                    var objKeys0 = Object.keys(output[0]);
+                    $scope.shareData.headerKeys = objKeys0.filter(function(val, i) {
                         if (val === $scope.shareData.unique) {
                             deleteKey = i;
                             return false;
@@ -858,9 +865,12 @@ angular.module('app', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                             return true;
                         }
                     })
-                    $scope.shareData.headerValues = Object.values(output[0]).filter(function(val, i) {
+                    $scope.shareData.headerValues = objKeys0.map(function(key) {
+                        return output[0][key];
+                      }).filter(function(val, i) {
                         return i !== deleteKey;
                     });
+
                     var invisibleKey = null;
                     $scope.shareData.headerValues.forEach(function(val, i){
                         if (val === "表示") {
@@ -966,8 +976,11 @@ angular.module('app', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                                         })
                                         */
                     var lookupValue = 0;
-                    $scope.shareData.headerValues1 = Object.values(output1[0]);
+
                     $scope.shareData.headerKeys1 = Object.keys(output1[0]);
+                    $scope.shareData.headerValues1 = $scope.shareData.headerKeys1.map(function(e) {
+                        return output1[0][e]
+                      });
                     $scope.shareData.lookupKey = $scope.shareData.headerKeys1[lookupValue];
                     $scope.shareData.rawList1 = angular.copy(output1.slice(1));
                     $scope.shareData.itemList1 = $scope.shareData.rawList1;
