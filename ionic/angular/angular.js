@@ -5124,8 +5124,8 @@ function createInjector(modulesToLoad, strictDi) {
           // eslint-disable-next-line no-ex-assign
           e = e.message + '\n' + e.stack;
         }
-        throw $injectorMinErr('modulerr', 'Failed to instantiate module {0} due to:\n{1}',
-                  module, e.stack || e.message || e);
+        // deleted by kwata
+        //throw $injectorMinErr('modulerr', 'Failed to instantiate module {0} due to:\n{1}', module, e.stack || e.message || e);
       }
     });
     return runBlocks;
