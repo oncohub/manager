@@ -354,7 +354,7 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                             //console.log(item, key, e);
                         }
                     });
-                }).map(val => {
+                }).map(function(val) {
                     return val["A"];
                 });
             } catch (e) {
@@ -366,7 +366,7 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                     if (!String(item[$scope.shareData.unique]).includes("divider")) {
                         return $scope.shareData.headerKeys.some(function (key) {
                             try {
-                                return (item[key].toLowerCase().indexOf(searchTerm.toLowerCase()) > -1) || (childList ? childList.some(val => {
+                                return (item[key].toLowerCase().indexOf(searchTerm.toLowerCase()) > -1) || (childList ? childList.some(function(val) {
                                     return item[key].toLowerCase().includes(val);
                                 }) : false);
                             } catch (e) {
