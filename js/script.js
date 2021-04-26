@@ -173,14 +173,34 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                 });
 
                 var invisibleKey = null;
-                $scope.shareData.headerValues.forEach(function(val, i) {
-                    if (val === "表示") {
-                        invisibleKey = $scope.shareData.headerKeys[i];
+                console.log('value', $scope.shareData.headerValues, output);
+                $scope.shareData.headerValues.forEach(function(val, i, self) {
+                    try {
+                        if (val === "表示") {
+                            invisibleKey = $scope.shareData.headerKeys[i];
+                        }
+                        if (val.includes("[T]") && !$scope.shareData.term) {
+                            $scope.shareData.term = $scope.shareData.headerKeys[i];
+                            self[i] = val.replace("[T]", "");
+                        } else if (val.includes("[S]") && !$scope.shareData.subterm) {
+                            $scope.shareData.subterm = $scope.shareData.headerKeys[i];
+                            self[i] = val.replace("[S]", "");
+                        } else if (val.includes("[G]") && !$scope.shareData.group) {
+                            $scope.shareData.group = $scope.shareData.headerKeys[i];
+                            group = $scope.shareData.headerKeys[i];
+                            self[i] = val.replace("[G]", "");
+                        };
+                        if (val.includes("[drug")) { // add
+                            $scope.shareData.drugs.push($scope.shareData.headerKeys[i]); // add
+                        } // add
+                        delete val[$scope.shareData.unique];
+                    } catch (e) {
+                        console.log(e);
                     }
-                })
+                });
                 output = output.filter(function(val, i) {
                     return !val[invisibleKey];
-                })
+                });
                 $scope.shareData.rawList = angular.copy(output.slice(1));
                 $scope.shareData.itemList = $scope.shareData.rawList;
             } catch (e) {
@@ -189,29 +209,7 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
             // title subtitle group setting
 
             $scope.shareData.drugs = [];
-            console.log('value', $scope.shareData.headerValues, output)
-            $scope.shareData.headerValues.forEach(function(val, i, self) {
-                try {
 
-                    if (val.includes("[T]") && !$scope.shareData.term) {
-                        $scope.shareData.term = $scope.shareData.headerKeys[i];
-                        self[i] = val.replace("[T]", "");
-                    } else if (val.includes("[S]") && !$scope.shareData.subterm) {
-                        $scope.shareData.subterm = $scope.shareData.headerKeys[i];
-                        self[i] = val.replace("[S]", "");
-                    } else if (val.includes("[G]") && !$scope.shareData.group) {
-                        $scope.shareData.group = $scope.shareData.headerKeys[i];
-                        group = $scope.shareData.headerKeys[i];
-                        self[i] = val.replace("[G]", "");
-                    };
-                    if (val.includes("[drug")) { // add
-                        $scope.shareData.drugs.push($scope.shareData.headerKeys[i]); // add
-                    } // add
-                    delete val[$scope.shareData.unique];
-                } catch (e) {
-                    console.log(e);
-                }
-            })
             if (!$scope.shareData.term) {
                 $scope.shareData.term = "A";
             }
