@@ -619,7 +619,7 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                 $ionicScrollDelegate.scrollTop(false);
             });
         } catch(e){
-            
+
         }
         }
         $scope.shareData.removeFlags = function () {
@@ -735,7 +735,9 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                 }
             }
             openReq.onerror = function (event) {
-                $scope.shareData.setDb(setname, $scope.shareData.flags);
+                alert('g');
+                init(test);
+                //$scope.shareData.setDb(setname, $scope.shareData.flags);
             }
         }
 
@@ -850,7 +852,7 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                         val["__rowNum__"] = i;
                         return val;
                     });
-
+console.log("outpu", output)
                     $scope.shareData.setDb("contents", output)
                     //////////////////////////////
                     ////// data loading
