@@ -157,8 +157,8 @@ angular.module('app', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
             $scope.shareData.group = null;
             var group = null;
             var deleteKey = null;
-            
             console.log("output", output);
+            console.log(Object.keys(output[0]), Object.values(output[0]));
             try {
                 $scope.shareData.headerKeys = Object.keys(output[0]).filter(function(val, i) {
                     if (val === $scope.shareData.unique) {
@@ -171,6 +171,7 @@ angular.module('app', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                 $scope.shareData.headerValues = Object.values(output[0]).filter(function(val, i) {
                     return i !== deleteKey;
                 });
+                console.log("$scope.shareData.headerValues", $scope.shareData.headerValues);
                 var invisibleKey = null;
                 $scope.shareData.headerValues.forEach(function(val, i) {
                     if (val === "表示") {
@@ -186,7 +187,6 @@ angular.module('app', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                 $scope.shareData.drugs = [];
                 $scope.shareData.headerValues.forEach(function(val, i) {
                     try {
-    
                         if (val.includes("[T]") && !$scope.shareData.term) {
                             $scope.shareData.term = $scope.shareData.headerKeys[i];
                             $scope.shareData.headerValues[i] = val.replace("[T]", "");
