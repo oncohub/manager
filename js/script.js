@@ -355,8 +355,8 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                         }
                     });
                 }).map(val => {
-                    return val["A"]
-                })
+                    return val["A"];
+                });
             } catch (e) {
                 //console.log(e);
             }
@@ -367,7 +367,7 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                         return $scope.shareData.headerKeys.some(function (key) {
                             try {
                                 return (item[key].toLowerCase().indexOf(searchTerm.toLowerCase()) > -1) || (childList ? childList.some(val => {
-                                    return item[key].toLowerCase().includes(val)
+                                    return item[key].toLowerCase().includes(val);
                                 }) : false);
                             } catch (e) {
                                 //console.log(item, key, e);
@@ -466,7 +466,7 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
             }
             $scope.shareData.setDb('flags', $scope.shareData.flags);
             $scope.shareData.flagNum = Object.keys($scope.shareData.flags).length;
-        }
+        };
 
 
         $scope.getItem = function (id, e) {
@@ -490,14 +490,14 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                         if (val.includes("r")) {
                             cautionItems.push($scope.shareData.headerKeys1[i]);
                         }
-                    })
+                    });
 
                     cautionItems1 = [];
                     $scope.shareData.headerValues.forEach(function(val, i){
                         if (val.includes("r") && !val.includes("[drug")) {
                             cautionItems1.push($scope.shareData.headerKeys[i]);
                         }
-                    })
+                    });
                     if (cautionItems1.length > 0) {
                         cautionItems1.forEach(function(ele) {
                             if ($scope.shareData.detail[ele]) {
@@ -516,7 +516,7 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                                     cautionList.push(rep)
                                     cautionList.push(val["infos"][ele]);
                                 }
-                            })
+                            });
                         }
                     });
                 } catch (e) {
@@ -662,10 +662,10 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                     console.log('transaction completed');
                 }
                 db.close();
-            }
+            };
             openReq.onerror = function (event) {
                 console.log('db open error');
-            }
+            };
         }
 
 
