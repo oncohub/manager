@@ -569,12 +569,11 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                 if (!item[$scope.shareData.group] && $scope.shareData.group) {
                     return true;
                 }
-                for (var val of this) {
-                    if (Number(val) === Number(item[$scope.shareData.unique])) {
-                        return true;
-                    }
-                }
-            }, flagList).filter(function (item, index, self) {
+                console.log('this', flagList)
+                return flagList.some(function(val) {
+                    return (Number(val) === Number(item[$scope.shareData.unique])) 
+                });
+            }).filter(function (item, index, self) {
                 try {
                     if ($scope.shareData.group) {
                         return (!item[$scope.shareData.group] && item[$scope.shareData.term] === self[index + 1][$scope.shareData.group]) || item[$scope.shareData.group];
