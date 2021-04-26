@@ -66,7 +66,7 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                         $scope.shareData.langJa = null;
                     }
                     */
-            //init(test);
+            
 
             var dbName = 'kw_DB';
             var storeName = 'kw_storage';
@@ -144,7 +144,7 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
             });
         };
 
-        //init(test);
+        init(test);
 
         function init(output) {
             //////////////////////////////
