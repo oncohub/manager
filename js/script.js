@@ -67,6 +67,13 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
             }
             */
             //init(test);
+
+        var dbName = 'kw_DB';
+        var storeName = 'kw_storage';
+
+        getDb('flags');
+        getDb('contents');
+        getDb('contents1');
         });
 
 
@@ -151,7 +158,7 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
             var group = null;
             var deleteKey = null;
             try {
-                $scope.shareData.headerKeys = Object.keys(output[0]).filter((val, i) => {
+                $scope.shareData.headerKeys = Object.keys(output[0]).filter(function(val, i) {
                     if (val === $scope.shareData.unique) {
                         deleteKey = i;
                         return false;
@@ -159,9 +166,19 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                         return true;
                     }
                 })
-                $scope.shareData.headerValues = Object.values(output[0]).filter((val, i) => {
+                $scope.shareData.headerValues = Object.values(output[0]).filter(function(val, i) {
                     return i !== deleteKey;
                 });
+                var invisibleKey = null;
+                $scope.shareData.headerValues.forEach(function(val, i) {
+                    if (val === "表示") {
+                        invisibleKey = $scope.shareData.headerKeys[i];
+                    }
+                })
+                console.log('invisibleKey',invisibleKey, $scope.shareData.headerValues, output)
+                output = output.filter(function(val, i) {
+                    return !val[invisibleKey]
+                })
                 $scope.shareData.rawList = angular.copy(output.slice(1));
                 $scope.shareData.itemList = $scope.shareData.rawList;
             } catch (e) {
@@ -170,7 +187,7 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
             // title subtitle group setting
 
             $scope.shareData.drugs = [];
-            $scope.shareData.headerValues.forEach((val, i) => {
+            $scope.shareData.headerValues.forEach(function(val, i) {
                 try {
 
                     if (val.includes("[T]") && !$scope.shareData.term) {
@@ -209,12 +226,12 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                     return self.map(function (val) {
                         return val;
                     }).indexOf(x) === i;
-                }).sort((a, b) => {
+                }).sort(function(a, b) {
                     return a.localeCompare(b);
                 });
 
                 var divAdded = [];
-                $scope.shareData.rawList.sort((a, b) => {
+                $scope.shareData.rawList.sort(function(a, b) {
                     return a[$scope.shareData.group].localeCompare(b[$scope.shareData.group]) || a[$scope.shareData.term].localeCompare(b[$scope.shareData.term]);
                 });
                 for (item of $scope.shareData.groupList) {
@@ -231,7 +248,7 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                     $scope.shareData.rawList.splice(divAdded[i], 0, insert);
                 }
             } else {
-                $scope.shareData.rawList.sort((a, b) => {
+                $scope.shareData.rawList.sort(function(a, b) {
                     return a[$scope.shareData.term].localeCompare(b[$scope.shareData.term]);
                 });
                 $scope.shareData.groupList = [];
@@ -246,15 +263,7 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
             $scope.shareData.subterm1 = null;
             $scope.shareData.group1 = null;
             var group1 = null;
-            /*
-                        var lookupValue = null;
-                        $scope.shareData.headerValues1 = Object.values(output1[0]).filter((val, i) => {
-                            if (val === "一般名") {
-                                lookupValue = i;
-                            }
-                            return true;
-                        })
-                        */
+
             var lookupValue = 0;
             $scope.shareData.headerValues1 = Object.values(output1[0]);
             $scope.shareData.headerKeys1 = Object.keys(output1[0]);
@@ -262,13 +271,13 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
             $scope.shareData.rawList1 = angular.copy(output1.slice(1));
             $scope.shareData.itemList1 = $scope.shareData.rawList1;
 
-            $scope.shareData.rawArr1 = $scope.shareData.rawList1.map((val, i) => {
+            $scope.shareData.rawArr1 = $scope.shareData.rawList1.map(function(val, i) {
                 return {
                     drug: val[$scope.shareData.lookupKey],
                     infos: val
                 }
             })
-            $scope.shareData.headerValues1.forEach((val, i) => {
+            $scope.shareData.headerValues1.forEach(function(val, i) {
                 try {
                     if (val.includes("[T]")) {
                         $scope.shareData.headerValues1[i] = val.replace("[T]", "");
@@ -282,7 +291,7 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                 }
             });
 
-            $scope.shareData.rawList1.sort((a, b) => {
+            $scope.shareData.rawList1.sort(function(a, b) {
                 return a[$scope.shareData.lookupKey].localeCompare(b[$scope.shareData.lookupKey]);
             });
         }
@@ -329,7 +338,7 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
             var searchTerm = $scope.shareData.hiraToKana($scope.shareData.search);
             try {
                 var childList = [];
-                childList = $scope.shareData.rawList1.filter((item, i, self) => {
+                childList = $scope.shareData.rawList1.filter(function(item, i, self) {
                     return $scope.shareData.headerKeys1.some(function (key) {
                         try {
                             return item[key].toLowerCase().indexOf(searchTerm.toLowerCase()) > -1;
@@ -337,8 +346,8 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                             //console.log(item, key, e);
                         }
                     });
-                }).map(val => {
-                    return val["A"]
+                }).map(function(val){
+                    return val["A"];
                 })
             } catch (e) {
                 //console.log(e);
@@ -349,7 +358,7 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                     if (!String(item[$scope.shareData.unique]).includes("divider")) {
                         return $scope.shareData.headerKeys.some(function (key) {
                             try {
-                                return (item[key].toLowerCase().indexOf(searchTerm.toLowerCase()) > -1) || (childList ? childList.some(val => {
+                                return (item[key].toLowerCase().indexOf(searchTerm.toLowerCase()) > -1) || (childList ? childList.some(function(val)  {
                                     return item[key].toLowerCase().includes(val)
                                 }) : false);
                             } catch (e) {
@@ -461,7 +470,7 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                 })[0]);
                 var cautionList = [];
 
-                $scope.shareData.drugs.forEach((val, i) => {
+                $scope.shareData.drugs.forEach(function(val, i) {
                     if ($scope.shareData.detail[val]) {
                         $scope.shareData.drugList.push($scope.shareData.detail[val]);
                     }
@@ -469,32 +478,32 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                 });
                 try {
                     var cautionItems = [];
-                    $scope.shareData.headerValues1.forEach((val, i) => {
+                    $scope.shareData.headerValues1.forEach(function(val, i) {
                         if (val.includes("r")) {
                             cautionItems.push($scope.shareData.headerKeys1[i]);
                         }
                     })
 
                     cautionItems1 = [];
-                    $scope.shareData.headerValues.forEach((val, i) => {
+                    $scope.shareData.headerValues.forEach(function(val, i) {
                         if (val.includes("r") && !val.includes("[drug")) {
                             cautionItems1.push($scope.shareData.headerKeys[i]);
                         }
                     })
                     if (cautionItems1.length > 0) {
-                        cautionItems1.forEach(ele => {
+                        cautionItems1.forEach(function(ele) {
                             if ($scope.shareData.detail[ele]) {
                                 cautionList.unshift($scope.shareData.detail[ele]);
                             }
                         })
                     }
 
-                    $scope.shareData.rawArr1.forEach(val => {
+                    $scope.shareData.rawArr1.forEach(function(val) {
                         if ($scope.shareData.drugList.includes(val["drug"])) {
 
                             var rep = "--- " + val["infos"]["A"] + " (" + val["infos"]["B"] + ") ---"
 
-                            cautionItems.forEach(ele => {
+                            cautionItems.forEach(function(ele) {
                                 if (val["infos"][ele]) {
                                     cautionList.push(rep)
                                     cautionList.push(val["infos"][ele]);
@@ -542,7 +551,7 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
             })
         }
         $scope.shareData.getDrugInfos1 = function (drug) {
-            return $scope.shareData.rawArr1.find(val => (val["drug"] === drug))["infos"];
+            return $scope.shareData.rawArr1.find(function(val){return(val["drug"] === drug)})["infos"];
         }
 
         $scope.shareData.getFlag = function () {
@@ -617,11 +626,13 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
             });
         }
 
+        var dbName = 'kw_DB';
+        var storeName = 'kw_storage';
+
         getDb('flags');
         getDb('contents');
         getDb('contents1');
-        var dbName = 'kw_DB';
-        var storeName = 'kw_storage';
+
 
         $scope.shareData.setDb = function (setname, value) {
             var openReq = indexedDB.open(dbName);
@@ -821,7 +832,7 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                         cellDates: true,
                     });
                     var outputpre = angular.copy(to_json(wb)["0"]);
-                    var output = outputpre.map((val, i) => {
+                    var output = outputpre.map(function(val, i) {
                         val["__rowNum__"] = i;
                         return val;
                     })
@@ -838,7 +849,7 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                     var group = null;
 
                     var deleteKey = null;
-                    $scope.shareData.headerKeys = Object.keys(output[0]).filter((val, i) => {
+                    $scope.shareData.headerKeys = Object.keys(output[0]).filter(function(val, i) {
                         if (val === $scope.shareData.unique) {
                             deleteKey = i;
                             return false;
@@ -846,24 +857,25 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                             return true;
                         }
                     })
-                    $scope.shareData.headerValues = Object.values(output[0]).filter((val, i) => {
+                    $scope.shareData.headerValues = Object.values(output[0]).filter(function(val, i) {
                         return i !== deleteKey;
                     });
                     var invisibleKey = null;
-                    $scope.shareData.headerValues.forEach((val, i) => {
+                    $scope.shareData.headerValues.forEach(function(val, i){
                         if (val === "表示") {
                             invisibleKey = $scope.shareData.headerKeys[i];
                         }
                     })
-                    output = output.filter((val, i) => {
-                        return !val[invisibleKey]
+                    console.log('invisibleKey',invisibleKey, $scope.shareData.headerValues, output)
+                    output = output.filter(function(val, i){
+                        return !val[invisibleKey];
                     })
                     console.log(invisibleKey, output)
                     $scope.shareData.rawList = angular.copy(output.slice(1));
                     $scope.shareData.itemList = $scope.shareData.rawList;
                     $scope.shareData.drugs = []; // add
-
-                    $scope.shareData.headerValues.forEach((val, i) => {
+                    console.log(invisibleKey, output, $scope.shareData.rawList)
+                    $scope.shareData.headerValues.forEach(function(val, i) {
                         try {
                             if (val.includes("[T]") && !$scope.shareData.term) {
                                 $scope.shareData.term = $scope.shareData.headerKeys[i];
@@ -887,7 +899,6 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                     if (!$scope.shareData.term) {
                         $scope.shareData.term = "A";
                     }
-                    console.log($scope.shareData.drugs)
 
                     /*/////////////////////////////////////////////
                     $scope.shareData.group = "B"; //"soc";
@@ -903,12 +914,12 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                             return self.map(function (val) {
                                 return val;
                             }).indexOf(x) === i;
-                        }).sort((a, b) => {
+                        }).sort(function(a, b){
                             return a.localeCompare(b);
                         });
 
                         var divAdded = [];
-                        $scope.shareData.rawList.sort((a, b) => {
+                        $scope.shareData.rawList.sort(function(a, b) {
                             return a[group].localeCompare(b[group]) || a[$scope.shareData.term].localeCompare(b[$scope.shareData.term]);
                         });
                         for (item of $scope.shareData.groupList) {
@@ -925,7 +936,7 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                             $scope.shareData.rawList.splice(divAdded[i], 0, insert);
                         }
                     } else {
-                        $scope.shareData.rawList.sort((a, b) => {
+                        $scope.shareData.rawList.sort(function(a, b) {
                             return a[$scope.shareData.term].localeCompare(b[$scope.shareData.term]);
                         });
                         $scope.shareData.groupList = [];
@@ -960,14 +971,14 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                     $scope.shareData.rawList1 = angular.copy(output1.slice(1));
                     $scope.shareData.itemList1 = $scope.shareData.rawList1;
 
-                    $scope.shareData.rawArr1 = $scope.shareData.rawList1.map((val, i) => {
+                    $scope.shareData.rawArr1 = $scope.shareData.rawList1.map(function(val, i){
                         return {
                             drug: val[$scope.shareData.lookupKey],
                             infos: val
                         }
                     })
                     console.log($scope.shareData.rawArr1, $scope.shareData.lookupKey, $scope.shareData.headerKeys1, lookupValue)
-                    $scope.shareData.headerValues1.forEach((val, i) => {
+                    $scope.shareData.headerValues1.forEach(function(val, i) {
                         try {
                             if (val.includes("[T]")) {
                                 $scope.shareData.headerValues1[i] = val.replace("[T]", "");
@@ -981,7 +992,7 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                         }
                     });
 
-                    $scope.shareData.rawList1.sort((a, b) => {
+                    $scope.shareData.rawList1.sort(function(a, b) {
                         return a[$scope.shareData.lookupKey].localeCompare(b[$scope.shareData.lookupKey]);
                     });
 
