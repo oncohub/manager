@@ -18,7 +18,7 @@
 // build processes may have already created an ionic obj
 window.ionic = window.ionic || {};
 window.ionic.views = {};
-window.ionic.version = '1.3.5';
+window.ionic.version = '2.0.1';
 
 (function (ionic) {
 

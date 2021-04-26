@@ -13,8 +13,8 @@ angular.module('jett.ionic.filter.bar', ['ionic']);
                 //create platform specific filterBar template using filterConfig items
                 if ($ionicPlatform.is('android')) {
                     filterBarTemplate =
-                        '<div ng-controller="SearchCtrl" class="filter-bar-wrapper filter-bar-dark filter-bar-transition-filter-bar-in">' +
-                        '<div class="bar bar-header bar-dark item-input-inset">' +
+                        '<div ng-controller="SearchCtrl" class="filter-bar-wrapper filter-bar-positive filter-bar-transition-filter-bar-in">' +
+                        '<div class="bar bar-header bar-positive item-input-inset">' +
                         '<button class="filter-bar-cancel button button-icon icon ion-ios-arrow-left" style="transform: translateX(-8px);"></button>' +
                         '<label class="item-input-wrapper" style="background-color: #fff">' +
                         '<input type="search" class="filter-bar-search" ng-model="shareData.search" ng-model-options="{debounce: 300 }" placeholder="{{shareData.local[shareData.lang].search}}..." />' +
@@ -24,11 +24,11 @@ angular.module('jett.ionic.filter.bar', ['ionic']);
                         '</div>';
                 } else {
                     filterBarTemplate =
-                        '<div ng-controller="SearchCtrl" class="filter-bar-wrapper filter-bar-dark filter-bar-transition-filter-bar-in">' +
-                        '<div class="bar bar-header bar-dark item-input-inset">' +
+                        '<div ng-controller="SearchCtrl" class="filter-bar-wrapper filter-bar-positive filter-bar-transition-filter-bar-in">' +
+                        '<div class="bar bar-header bar-positive item-input-inset">' +
                         '<label class="item-input-wrapper" style="background-color: #fff">' +
                         '<i class="icon ion-ios-search-strong placeholder-icon"></i>' +
-                        '<input type="search" class="filter-bar-search" ng-model="shareData.search" ng-model-options="{debounce: 300 }" placeholder="{{shareData.local[shareData.lang].search}}..."/>' +
+                        '<input type="search" class="filter-bar-search" ng-model="shareData.search" ng-model-options="{debounce: 300 }" placeholder="{{shareData.local[shareData.lang].search}}..." />' +
                         '<button class="filter-bar-clear button button-icon icon" ng-class="getClearButtonClass()"></button>' +
                         '</label>' +
                         '<button class="filter-bar-cancel button button-clear" id="clearBtn">{{shareData.local[shareData.lang].cancel}}</button>' +
