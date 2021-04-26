@@ -93,54 +93,7 @@
     <script src="js/script.js"></script>
     <script src="js/xlsx.full.min.js"></script>
     <noscript>Your browser does not support JavaScript!</noscript>
-    <script>
-       if ('serviceWorker' in navigator) {
-            navigator.serviceWorker
-                .register('service-worker.js', {
-                    scope: '/manager/'
-                })
-                .then(function (registration) {
-                    console.log("Service Worker Registered");
-                    registration.onupdatefound = function () {
-                        console.log('Update found');
-                    }
-                }).catch(function (error) {
-                    // registration failed
-                    console.log('Registration failed with ' + error);
-                });
-            navigator.serviceWorker.ready.then(function (registration) {
-                console.log('Service Worker Ready');
-            });
 
-            function swUnregister() {
-                navigator.serviceWorker.getRegistrations().then(function (registrations) {
-                    for (let registration of registrations) {
-                        registration.unregister();
-                    }
-                }).then(function () {
-                    console.log("Service Worker Unregistered");
-                }).catch(function (error) {
-                    // registration failed
-                    alert('Unregistration failed with ' + error);
-                });
-                caches.keys().then(function (cacheNames) {
-                    cacheNames.forEach(function (cacheName) {
-                        caches.delete(cacheName);
-                    });
-                }).then(function () {
-                    console.log("Cashe Removed");
-                }).catch(function (error) {
-                    // registration failed
-                    alert('Cashe Removal failed with ' + error);
-                });
-            }
-        }
-        let refreshing;
-        navigator.serviceWorker.addEventListener('controllerchange', function () {
-            if (refreshing) return;
-            window.location.reload();
-            refreshing = true;
-        });    </script>
 </body>
 
 </html>

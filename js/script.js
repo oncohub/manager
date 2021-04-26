@@ -67,6 +67,13 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
             }
             */
             //init(test);
+
+        var dbName = 'kw_DB';
+        var storeName = 'kw_storage';
+
+        getDb('flags');
+        getDb('contents');
+        getDb('contents1');
         });
 
 
@@ -162,6 +169,16 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                 $scope.shareData.headerValues = Object.values(output[0]).filter((val, i) => {
                     return i !== deleteKey;
                 });
+                var invisibleKey = null;
+                $scope.shareData.headerValues.forEach((val, i) => {
+                    if (val === "表示") {
+                        invisibleKey = $scope.shareData.headerKeys[i];
+                    }
+                })
+                console.log('invisibleKey',invisibleKey, $scope.shareData.headerValues, output)
+                output = output.filter((val, i) => {
+                    return !val[invisibleKey]
+                })
                 $scope.shareData.rawList = angular.copy(output.slice(1));
                 $scope.shareData.itemList = $scope.shareData.rawList;
             } catch (e) {
@@ -617,11 +634,13 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
             });
         }
 
+        var dbName = 'kw_DB';
+        var storeName = 'kw_storage';
+
         getDb('flags');
         getDb('contents');
         getDb('contents1');
-        var dbName = 'kw_DB';
-        var storeName = 'kw_storage';
+
 
         $scope.shareData.setDb = function (setname, value) {
             var openReq = indexedDB.open(dbName);
@@ -855,6 +874,7 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                             invisibleKey = $scope.shareData.headerKeys[i];
                         }
                     })
+                    console.log('invisibleKey',invisibleKey, $scope.shareData.headerValues, output)
                     output = output.filter((val, i) => {
                         return !val[invisibleKey]
                     })
@@ -862,7 +882,7 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                     $scope.shareData.rawList = angular.copy(output.slice(1));
                     $scope.shareData.itemList = $scope.shareData.rawList;
                     $scope.shareData.drugs = []; // add
-
+                    console.log(invisibleKey, output, $scope.shareData.rawList)
                     $scope.shareData.headerValues.forEach((val, i) => {
                         try {
                             if (val.includes("[T]") && !$scope.shareData.term) {
@@ -887,7 +907,6 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                     if (!$scope.shareData.term) {
                         $scope.shareData.term = "A";
                     }
-                    console.log($scope.shareData.drugs)
 
                     /*/////////////////////////////////////////////
                     $scope.shareData.group = "B"; //"soc";
