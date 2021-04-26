@@ -239,14 +239,14 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                         return element[$scope.shareData.group];
                     }).indexOf(item);
                     divAdded.unshift(pos);
-                }
+                };
                 for (i in divAdded) {
                     var insert = {}
                     insert[$scope.shareData.term] = $scope.shareData.rawList[divAdded[i]][$scope.shareData.group];
                     insert[$scope.shareData.group] = false;
                     insert[$scope.shareData.unique] = 'divider' + 1;
                     $scope.shareData.rawList.splice(divAdded[i], 0, insert);
-                }
+                };
             } else {
                 $scope.shareData.rawList.sort(function(a, b) {
                     return a[$scope.shareData.term].localeCompare(b[$scope.shareData.term]);
