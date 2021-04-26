@@ -156,6 +156,7 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
             $scope.shareData.group = null;
             var group = null;
             var deleteKey = null;
+            console.log('value', Object.values(output[0]), Object.keys(output[0]), output);
             try {
                 $scope.shareData.headerKeys = Object.keys(output[0]).filter(function (val, i) {
                     if (val === $scope.shareData.unique) {
@@ -169,7 +170,7 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                 var headerValues = Object.values(output[0]);
 
                 var invisibleKey = null;
-                console.log('value', Object.values(output[0]), output);
+                
                 headerValues.filter(function (val, i) {
                     return deleteKey !== Number(val);
                 }).forEach(function (val, i, self) {
