@@ -175,7 +175,6 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                         invisibleKey = $scope.shareData.headerKeys[i];
                     }
                 })
-                console.log('invisibleKey', invisibleKey, $scope.shareData.headerValues, output)
                 output = output.filter(function(val, i) {
                     return !val[invisibleKey];
                 })
@@ -187,19 +186,20 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
             // title subtitle group setting
 
             $scope.shareData.drugs = [];
-            $scope.shareData.headerValues.forEach(function(val, i) {
+            console.log('value', $scope.shareData.headerValues)
+            $scope.shareData.headerValues.forEach(function(val, i, self) {
                 try {
 
                     if (val.includes("[T]") && !$scope.shareData.term) {
                         $scope.shareData.term = $scope.shareData.headerKeys[i];
-                        $scope.shareData.headerValues[i] = val.replace("[T]", "");
+                        self[i] = val.replace("[T]", "");
                     } else if (val.includes("[S]") && !$scope.shareData.subterm) {
                         $scope.shareData.subterm = $scope.shareData.headerKeys[i];
-                        $scope.shareData.headerValues[i] = val.replace("[S]", "");
+                        self[i] = val.replace("[S]", "");
                     } else if (val.includes("[G]") && !$scope.shareData.group) {
                         $scope.shareData.group = $scope.shareData.headerKeys[i];
                         group = $scope.shareData.headerKeys[i];
-                        $scope.shareData.headerValues[i] = val.replace("[G]", "");
+                        self[i] = val.replace("[G]", "");
                     };
                     if (val.includes("[drug")) { // add
                         $scope.shareData.drugs.push($scope.shareData.headerKeys[i]); // add
