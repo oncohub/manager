@@ -234,12 +234,12 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                 $scope.shareData.rawList.sort(function(a, b) {
                     return a[$scope.shareData.group].localeCompare(b[$scope.shareData.group]) || a[$scope.shareData.term].localeCompare(b[$scope.shareData.term]);
                 });
-                for (var item of $scope.shareData.groupList) {
+                $scope.shareData.groupList.forEach(function(item) {
                     var pos = $scope.shareData.itemList.map(function (element) {
                         return element[$scope.shareData.group];
                     }).indexOf(item);
                     divAdded.unshift(pos);
-                };
+                });
                 for (var i in divAdded) {
                     var insert = {}
                     insert[$scope.shareData.term] = $scope.shareData.rawList[divAdded[i]][$scope.shareData.group];
@@ -930,13 +930,13 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                         $scope.shareData.rawList.sort(function (a, b) {
                             return a[group].localeCompare(b[group]) || a[$scope.shareData.term].localeCompare(b[$scope.shareData.term]);
                         });
-                        for (item of $scope.shareData.groupList) {
+                        for (var item of $scope.shareData.groupList) {
                             var pos = $scope.shareData.itemList.map(function (element) {
                                 return element[group];
                             }).indexOf(item);
                             divAdded.unshift(pos);
                         }
-                        for (i in divAdded) {
+                        for (var i in divAdded) {
                             var insert = {};
                             insert[$scope.shareData.term] = $scope.shareData.rawList[divAdded[i]][group];
                             insert[group] = false;
