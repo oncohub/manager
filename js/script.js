@@ -157,6 +157,8 @@ angular.module('app', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
             $scope.shareData.group = null;
             var group = null;
             var deleteKey = null;
+            
+            console.log("output", output);
             try {
                 $scope.shareData.headerKeys = Object.keys(output[0]).filter(function(val, i) {
                     if (val === $scope.shareData.unique) {
@@ -181,78 +183,79 @@ angular.module('app', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                 })
                 $scope.shareData.rawList = angular.copy(output.slice(1));
                 $scope.shareData.itemList = $scope.shareData.rawList;
+                $scope.shareData.drugs = [];
+                $scope.shareData.headerValues.forEach(function(val, i) {
+                    try {
+    
+                        if (val.includes("[T]") && !$scope.shareData.term) {
+                            $scope.shareData.term = $scope.shareData.headerKeys[i];
+                            $scope.shareData.headerValues[i] = val.replace("[T]", "");
+                        } else if (val.includes("[S]") && !$scope.shareData.subterm) {
+                            $scope.shareData.subterm = $scope.shareData.headerKeys[i];
+                            $scope.shareData.headerValues[i] = val.replace("[S]", "");
+                        } else if (val.includes("[G]") && !$scope.shareData.group) {
+                            $scope.shareData.group = $scope.shareData.headerKeys[i];
+                            group = $scope.shareData.headerKeys[i];
+                            $scope.shareData.headerValues[i] = val.replace("[G]", "");
+                        }
+                        if (val.includes("[drug")) { // add
+                            $scope.shareData.drugs.push($scope.shareData.headerKeys[i]); // add
+                        } // add
+                        delete val[$scope.shareData.unique];
+                    } catch (e) {
+                        console.log(e);
+                    }
+                })
+                if (!$scope.shareData.term) {
+                    $scope.shareData.term = "A";
+                }
+                /*/////////////////////////////////////////////
+                        $scope.shareData.group = "B"; //"soc";
+                        var group = "B";
+                //////////////////////////////////////////////*/
+    
+                // making group list
+    
+                if ($scope.shareData.group) {
+                    $scope.shareData.groupList = $scope.shareData.rawList.map(function (element) {
+                        return element[$scope.shareData.group];
+                    }).filter(function (x, i, self) {
+                        return self.map(function (val) {
+                            return val;
+                        }).indexOf(x) === i;
+                    }).sort(function(a, b) {
+                        return a.localeCompare(b);
+                    });
+    
+                    var divAdded = [];
+                    $scope.shareData.rawList.sort(function(a, b) {
+                        return a[$scope.shareData.group].localeCompare(b[$scope.shareData.group]) || a[$scope.shareData.term].localeCompare(b[$scope.shareData.term]);
+                    });
+                    $scope.shareData.groupList.forEach(function(item) {
+                        var pos = $scope.shareData.itemList.map(function (element) {
+                            return element[$scope.shareData.group];
+                        }).indexOf(item);
+                        divAdded.unshift(pos);
+                    });
+                    for (var i in divAdded) {
+                        var insert = {}
+                        insert[$scope.shareData.term] = $scope.shareData.rawList[divAdded[i]][$scope.shareData.group];
+                        insert[$scope.shareData.group] = false;
+                        insert[$scope.shareData.unique] = 'divider' + 1;
+                        $scope.shareData.rawList.splice(divAdded[i], 0, insert);
+                    }
+                } else {
+                    $scope.shareData.rawList.sort(function(a, b) {
+                        return a[$scope.shareData.term].localeCompare(b[$scope.shareData.term]);
+                    });
+                    $scope.shareData.groupList = [];
+                }
             } catch (e) {
                 console.log(e);
             }
             // title subtitle group setting
 
-            $scope.shareData.drugs = [];
-            $scope.shareData.headerValues.forEach(function(val, i) {
-                try {
 
-                    if (val.includes("[T]") && !$scope.shareData.term) {
-                        $scope.shareData.term = $scope.shareData.headerKeys[i];
-                        $scope.shareData.headerValues[i] = val.replace("[T]", "");
-                    } else if (val.includes("[S]") && !$scope.shareData.subterm) {
-                        $scope.shareData.subterm = $scope.shareData.headerKeys[i];
-                        $scope.shareData.headerValues[i] = val.replace("[S]", "");
-                    } else if (val.includes("[G]") && !$scope.shareData.group) {
-                        $scope.shareData.group = $scope.shareData.headerKeys[i];
-                        group = $scope.shareData.headerKeys[i];
-                        $scope.shareData.headerValues[i] = val.replace("[G]", "");
-                    }
-                    if (val.includes("[drug")) { // add
-                        $scope.shareData.drugs.push($scope.shareData.headerKeys[i]); // add
-                    } // add
-                    delete val[$scope.shareData.unique];
-                } catch (e) {
-                    console.log(e);
-                }
-            })
-            if (!$scope.shareData.term) {
-                $scope.shareData.term = "A";
-            }
-            /*/////////////////////////////////////////////
-                    $scope.shareData.group = "B"; //"soc";
-                    var group = "B";
-            //////////////////////////////////////////////*/
-
-            // making group list
-
-            if ($scope.shareData.group) {
-                $scope.shareData.groupList = $scope.shareData.rawList.map(function (element) {
-                    return element[$scope.shareData.group];
-                }).filter(function (x, i, self) {
-                    return self.map(function (val) {
-                        return val;
-                    }).indexOf(x) === i;
-                }).sort(function(a, b) {
-                    return a.localeCompare(b);
-                });
-
-                var divAdded = [];
-                $scope.shareData.rawList.sort(function(a, b) {
-                    return a[$scope.shareData.group].localeCompare(b[$scope.shareData.group]) || a[$scope.shareData.term].localeCompare(b[$scope.shareData.term]);
-                });
-                $scope.shareData.groupList.forEach(function(item) {
-                    var pos = $scope.shareData.itemList.map(function (element) {
-                        return element[$scope.shareData.group];
-                    }).indexOf(item);
-                    divAdded.unshift(pos);
-                });
-                for (var i in divAdded) {
-                    var insert = {}
-                    insert[$scope.shareData.term] = $scope.shareData.rawList[divAdded[i]][$scope.shareData.group];
-                    insert[$scope.shareData.group] = false;
-                    insert[$scope.shareData.unique] = 'divider' + 1;
-                    $scope.shareData.rawList.splice(divAdded[i], 0, insert);
-                }
-            } else {
-                $scope.shareData.rawList.sort(function(a, b) {
-                    return a[$scope.shareData.term].localeCompare(b[$scope.shareData.term]);
-                });
-                $scope.shareData.groupList = [];
-            }
         }
 
         function init1(output1) {
