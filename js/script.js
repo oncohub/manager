@@ -567,6 +567,7 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
         }
 
         $scope.shareData.getFlag = function () {
+            try{
             $scope.shareData.menuSelected = "____flag____";
             var flagList = Object.keys($scope.shareData.flags);
             $scope.shareData.itemList = $scope.shareData.rawList.filter(function (item) {
@@ -616,7 +617,10 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
             $ionicSideMenuDelegate.toggleLeft();
             $timeout(function () {
                 $ionicScrollDelegate.scrollTop(false);
-            })
+            });
+        } catch(e){
+            
+        }
         }
         $scope.shareData.removeFlags = function () {
 
