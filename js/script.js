@@ -24,6 +24,8 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
             }
             //$scope.shareData.flags = {};
 
+        init(test);
+
         });
         $scope.$on('$ionicView.afterEnter', function () {
             /*
@@ -144,7 +146,6 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
             });
         };
 
-        init(test);
 
         function init(output) {
             //////////////////////////////
@@ -166,9 +167,11 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                         return true;
                     }
                 });
+                
                 $scope.shareData.headerValues = Object.values(output[0]).filter(function(val, i) {
                     return i !== deleteKey;
                 });
+
                 var invisibleKey = null;
                 $scope.shareData.headerValues.forEach(function(val, i) {
                     if (val === "表示") {
@@ -186,7 +189,7 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
             // title subtitle group setting
 
             $scope.shareData.drugs = [];
-            console.log('value', $scope.shareData.headerValues)
+            console.log('value', $scope.shareData.headerValues, output)
             $scope.shareData.headerValues.forEach(function(val, i, self) {
                 try {
 
