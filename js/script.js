@@ -171,7 +171,7 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                 var headerValues = Object.values(output[0]);
 
                 var invisibleKey = null;
-                console.log('value', $scope.shareData.headerValues, Object.values(output[0]), output);
+                console.log('value', Object.values(output[0]), output);
                 headerValues.filter(function (val, i) {
                     return deleteKey !== Number(val);
                 }).forEach(function (val, i, self) {
