@@ -74,8 +74,8 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
             var storeName = 'kw_storage';
 
             getDb('flags');
-            getDb('contents');
-            getDb('contents1');
+            //getDb('contents');
+            //getDb('contents1');
         });
 
 
