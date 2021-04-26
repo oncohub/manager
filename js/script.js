@@ -977,6 +977,7 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                             infos: val
                         }
                     })
+                    
                     console.log($scope.shareData.rawArr1, $scope.shareData.lookupKey, $scope.shareData.headerKeys1, lookupValue)
                     $scope.shareData.headerValues1.forEach(function(val, i) {
                         try {
