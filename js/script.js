@@ -168,13 +168,13 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                     }
                 });
 
-                $scope.shareData.headerValues = Object.values(output[0]).filter(function (val, i) {
-                    return i !== deleteKey;
-                });
+                var headerValues = Object.values(output[0]);
 
                 var invisibleKey = null;
-                console.log('value', $scope.shareData.headerValues, output);
-                $scope.shareData.headerValues.forEach(function (val, i, self) {
+                console.log('value', $scope.shareData.headerValues, Object.values(output[0]), output);
+                headerValues.filter(function (val, i) {
+                    return deleteKey !== Number(val);
+                }).forEach(function (val, i, self) {
                     try {
                         if (val === "表示") {
                             invisibleKey = $scope.shareData.headerKeys[i];
@@ -735,7 +735,6 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                 }
             }
             openReq.onerror = function (event) {
-                alert('g');
                 init(test);
                 //$scope.shareData.setDb(setname, $scope.shareData.flags);
             }
