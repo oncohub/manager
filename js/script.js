@@ -24,8 +24,6 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
             }
             //$scope.shareData.flags = {};
 
-            init(test);
-
         });
         $scope.$on('$ionicView.afterEnter', function () {
             /*
@@ -74,8 +72,8 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
             var storeName = 'kw_storage';
 
             getDb('flags');
-            //getDb('contents');
-            //getDb('contents1');
+            getDb('contents');
+            getDb('contents1');
         });
 
 
