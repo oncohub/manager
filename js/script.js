@@ -1,4 +1,4 @@
-angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
+angular.module('app', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
     .controller('HomeCtrl', ["$scope", "$timeout", "$state", "sharedService", "$ionicScrollDelegate", "$ionicFilterBar", "$ionicSideMenuDelegate", "$ionicLoading", "$ionicPopup", function ($scope, $timeout, $state, sharedService, $ionicScrollDelegate, $ionicFilterBar, $ionicSideMenuDelegate, $ionicLoading, $ionicPopup) {
         $scope.shareData = sharedService;
 
@@ -234,13 +234,13 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                 $scope.shareData.rawList.sort(function(a, b) {
                     return a[$scope.shareData.group].localeCompare(b[$scope.shareData.group]) || a[$scope.shareData.term].localeCompare(b[$scope.shareData.term]);
                 });
-                for (item of $scope.shareData.groupList) {
+                $scope.shareData.groupList.forEach(function(item) {
                     var pos = $scope.shareData.itemList.map(function (element) {
                         return element[$scope.shareData.group];
                     }).indexOf(item);
                     divAdded.unshift(pos);
-                }
-                for (i in divAdded) {
+                });
+                for (var i in divAdded) {
                     var insert = {}
                     insert[$scope.shareData.term] = $scope.shareData.rawList[divAdded[i]][$scope.shareData.group];
                     insert[$scope.shareData.group] = false;
@@ -561,12 +561,10 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                 if (!item[$scope.shareData.group] && $scope.shareData.group) {
                     return true;
                 }
-                for (val of this) {
-                    if (Number(val) === Number(item[$scope.shareData.unique])) {
-                        return true;
-                    }
-                }
-            }, flagList).filter(function (item, index, self) {
+                return flagList.some(function(val){
+                    return Number(val) === Number(item[$scope.shareData.unique]);
+                });
+            }).filter(function (item, index, self) {
                 try {
                     if ($scope.shareData.group) {
                         return (!item[$scope.shareData.group] && item[$scope.shareData.term] === self[index + 1][$scope.shareData.group]) || item[$scope.shareData.group];
@@ -922,13 +920,13 @@ angular.module('managerApp', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                         $scope.shareData.rawList.sort(function(a, b) {
                             return a[group].localeCompare(b[group]) || a[$scope.shareData.term].localeCompare(b[$scope.shareData.term]);
                         });
-                        for (item of $scope.shareData.groupList) {
+                        $scope.shareData.groupList(function(item) {
                             var pos = $scope.shareData.itemList.map(function (element) {
                                 return element[group];
                             }).indexOf(item);
                             divAdded.unshift(pos);
-                        }
-                        for (i in divAdded) {
+                        });
+                        for (var i in divAdded) {
                             var insert = {}
                             insert[$scope.shareData.term] = $scope.shareData.rawList[divAdded[i]][group];
                             insert[group] = false;
