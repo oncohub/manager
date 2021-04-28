@@ -10,7 +10,7 @@ angular.module('app', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
 
         $scope.$on('$ionicView.beforeLeave', function (e) {
             try {
-                document.getElementById('filterBar').style.display = 'none';
+               // document.getElementById('filterBar').style.display = 'none';
             } catch (e) {
                 console.log(e);
             }
@@ -18,7 +18,7 @@ angular.module('app', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
         $scope.$on('$ionicView.beforeEnter', function (e) {
             try {
                 $scope.shareData.flagNum = Object.keys($scope.shareData.flags).length;
-                document.getElementById('filterBar').style.display = 'inherit';
+                //document.getElementById('filterBar').style.display = 'inherit';
             } catch (e) {
                 console.log(e);
             }
@@ -26,54 +26,54 @@ angular.module('app', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
 
         });
         $scope.$on('$ionicView.afterEnter', function () {
-/*
-            var getFirstBrowserLanguage = function () {
-                var nav = window.navigator,
-                    browserLanguagePropertyKeys = ['language', 'browserLanguage', 'systemLanguage', 'userLanguage'],
-                    i,
-                    language;
+            /*
+                        var getFirstBrowserLanguage = function () {
+                            var nav = window.navigator,
+                                browserLanguagePropertyKeys = ['language', 'browserLanguage', 'systemLanguage', 'userLanguage'],
+                                i,
+                                language;
 
-                // support for HTML 5.1 "navigator.languages"
-                if (Array.isArray(nav.languages)) {
-                    for (i = 0; i < nav.languages.length; i++) {
-                        language = nav.languages[i];
-                        if (language && language.length) {
-                            return language;
+                            // support for HTML 5.1 "navigator.languages"
+                            if (Array.isArray(nav.languages)) {
+                                for (i = 0; i < nav.languages.length; i++) {
+                                    language = nav.languages[i];
+                                    if (language && language.length) {
+                                        return language;
+                                    }
+                                }
+                            }
+
+                            // support for other well known properties in browsers
+                            for (i = 0; i < browserLanguagePropertyKeys.length; i++) {
+                                language = nav[browserLanguagePropertyKeys[i]];
+                                if (language && language.length) {
+                                    return language;
+                                }
+                            }
+
+                            return null;
+                        };
+                        if ($scope.shareData.secondaryOn) {
+                            if (getFirstBrowserLanguage() === 'ja') {
+                                $scope.shareData.lang = 'ja';
+                                $scope.shareData.langJa = true;
+                            } else {
+                                $scope.shareData.lang = 'en';
+                                $scope.shareData.langJa = null;
+                            }
+                        } else {
+                            $scope.shareData.lang = 'en';
+                            $scope.shareData.langJa = null;
                         }
-                    }
-                }
-
-                // support for other well known properties in browsers
-                for (i = 0; i < browserLanguagePropertyKeys.length; i++) {
-                    language = nav[browserLanguagePropertyKeys[i]];
-                    if (language && language.length) {
-                        return language;
-                    }
-                }
-
-                return null;
-            };
-            if ($scope.shareData.secondaryOn) {
-                if (getFirstBrowserLanguage() === 'ja') {
-                    $scope.shareData.lang = 'ja';
-                    $scope.shareData.langJa = true;
-                } else {
-                    $scope.shareData.lang = 'en';
-                    $scope.shareData.langJa = null;
-                }
-            } else {
-                $scope.shareData.lang = 'en';
-                $scope.shareData.langJa = null;
-            }
-            */
+                        */
             //init(test);
 
-        var dbName = 'kw_DB';
-        var storeName = 'kw_storage';
+            var dbName = 'kw_DB';
+            var storeName = 'kw_storage';
 
-        getDb('flags');
-        getDb('contents');
-        getDb('contents1');
+            getDb('flags');
+            getDb('contents');
+            getDb('contents1');
         });
 
 
@@ -157,11 +157,9 @@ angular.module('app', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
             $scope.shareData.group = null;
             var group = null;
             var deleteKey = null;
-            console.log("output", output);
-            console.log(Object.keys(output[0]));
             try {
                 var objKeys0 = Object.keys(output[0]);
-                $scope.shareData.headerKeys = objKeys0.filter(function(val, i) {
+                $scope.shareData.headerKeys = objKeys0.filter(function (val, i) {
                     if (val === $scope.shareData.unique) {
                         deleteKey = i;
                         return false;
@@ -169,40 +167,39 @@ angular.module('app', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                         return true;
                     }
                 })
-                $scope.shareData.headerValues = objKeys0.map(function(key) {
+                $scope.shareData.headerValues = objKeys0.map(function (key) {
                     return output[0][key];
-                  }).filter(function(val, i) {
+                }).filter(function (val, i) {
                     return i !== deleteKey;
                 });
-                console.log("output1",objKeys0, $scope.shareData.headerValues);
-                console.log("$scope.shareData.headerValues", $scope.shareData.headerValues);
+
                 var invisibleKey = null;
-                $scope.shareData.headerValues.forEach(function(val, i) {
+                $scope.shareData.headerValues.forEach(function (val, i) {
                     if (val === "表示") {
                         invisibleKey = $scope.shareData.headerKeys[i];
                     }
                 })
-                console.log('invisibleKey',invisibleKey, $scope.shareData.headerValues, output)
-                output = output.filter(function(val, i) {
+    
+                output = output.filter(function (val, i) {
                     return !val[invisibleKey]
                 })
                 $scope.shareData.rawList = angular.copy(output.slice(1));
                 $scope.shareData.itemList = $scope.shareData.rawList;
                 $scope.shareData.drugs = [];
-                $scope.shareData.headerValues.forEach(function(val, i) {
+                $scope.shareData.headerValues.forEach(function (val, i) {
                     try {
-                        if (val.includes("[T]") && !$scope.shareData.term) {
+                        if (val.indexOf("[T]") > -1 && !$scope.shareData.term) {
                             $scope.shareData.term = $scope.shareData.headerKeys[i];
                             $scope.shareData.headerValues[i] = val.replace("[T]", "");
-                        } else if (val.includes("[S]") && !$scope.shareData.subterm) {
+                        } else if (val.indexOf("[S]") > -1 && !$scope.shareData.subterm) {
                             $scope.shareData.subterm = $scope.shareData.headerKeys[i];
                             $scope.shareData.headerValues[i] = val.replace("[S]", "");
-                        } else if (val.includes("[G]") && !$scope.shareData.group) {
+                        } else if (val.indexOf("[G]") > -1 && !$scope.shareData.group) {
                             $scope.shareData.group = $scope.shareData.headerKeys[i];
                             group = $scope.shareData.headerKeys[i];
                             $scope.shareData.headerValues[i] = val.replace("[G]", "");
                         }
-                        if (val.includes("[drug")) { // add
+                        if (val.indexOf("[drug") > -1 ) { // add
                             $scope.shareData.drugs.push($scope.shareData.headerKeys[i]); // add
                         } // add
                         delete val[$scope.shareData.unique];
@@ -217,9 +214,9 @@ angular.module('app', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                         $scope.shareData.group = "B"; //"soc";
                         var group = "B";
                 //////////////////////////////////////////////*/
-    
+
                 // making group list
-    
+
                 if ($scope.shareData.group) {
                     $scope.shareData.groupList = $scope.shareData.rawList.map(function (element) {
                         return element[$scope.shareData.group];
@@ -227,15 +224,15 @@ angular.module('app', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                         return self.map(function (val) {
                             return val;
                         }).indexOf(x) === i;
-                    }).sort(function(a, b) {
+                    }).sort(function (a, b) {
                         return a.localeCompare(b);
                     });
-    
+
                     var divAdded = [];
-                    $scope.shareData.rawList.sort(function(a, b) {
+                    $scope.shareData.rawList.sort(function (a, b) {
                         return a[$scope.shareData.group].localeCompare(b[$scope.shareData.group]) || a[$scope.shareData.term].localeCompare(b[$scope.shareData.term]);
                     });
-                    $scope.shareData.groupList.forEach(function(item) {
+                    $scope.shareData.groupList.forEach(function (item) {
                         var pos = $scope.shareData.itemList.map(function (element) {
                             return element[$scope.shareData.group];
                         }).indexOf(item);
@@ -249,7 +246,7 @@ angular.module('app', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                         $scope.shareData.rawList.splice(divAdded[i], 0, insert);
                     }
                 } else {
-                    $scope.shareData.rawList.sort(function(a, b) {
+                    $scope.shareData.rawList.sort(function (a, b) {
                         return a[$scope.shareData.term].localeCompare(b[$scope.shareData.term]);
                     });
                     $scope.shareData.groupList = [];
@@ -274,26 +271,26 @@ angular.module('app', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
             var lookupValue = 0;
 
             $scope.shareData.headerKeys1 = Object.keys(output1[0]);
-            $scope.shareData.headerValues1 = $scope.shareData.headerKeys1.map(function(e) {
+            $scope.shareData.headerValues1 = $scope.shareData.headerKeys1.map(function (e) {
                 return output1[0][e]
-              });
+            });
             $scope.shareData.lookupKey = $scope.shareData.headerKeys1[lookupValue];
             $scope.shareData.rawList1 = angular.copy(output1.slice(1));
             $scope.shareData.itemList1 = $scope.shareData.rawList1;
 
-            $scope.shareData.rawArr1 = $scope.shareData.rawList1.map(function(val, i) {
+            $scope.shareData.rawArr1 = $scope.shareData.rawList1.map(function (val, i) {
                 return {
                     drug: val[$scope.shareData.lookupKey],
                     infos: val
                 }
             })
-            $scope.shareData.headerValues1.forEach(function(val, i) {
+            $scope.shareData.headerValues1.forEach(function (val, i) {
                 try {
-                    if (val.includes("[T]")) {
+                    if (val.indexOf("[T]") > -1) {
                         $scope.shareData.headerValues1[i] = val.replace("[T]", "");
-                    } else if (val.includes("[S]")) {
+                    } else if (val.indexOf("[S]") > -1) {
                         $scope.shareData.headerValues1[i] = val.replace("[S]", "");
-                    } else if (val.includes("[G]")) {
+                    } else if (val.indexOf("[G]") > -1) {
                         $scope.shareData.headerValues1[i] = val.replace("[G]", "");
                     }
                 } catch (e) {
@@ -301,7 +298,7 @@ angular.module('app', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                 }
             });
 
-            $scope.shareData.rawList1.sort(function(a, b) {
+            $scope.shareData.rawList1.sort(function (a, b) {
                 return a[$scope.shareData.lookupKey].localeCompare(b[$scope.shareData.lookupKey]);
             });
         }
@@ -348,7 +345,7 @@ angular.module('app', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
             var searchTerm = $scope.shareData.hiraToKana($scope.shareData.search);
             try {
                 var childList = [];
-                childList = $scope.shareData.rawList1.filter(function(item, i, self) {
+                childList = $scope.shareData.rawList1.filter(function (item, i, self) {
                     return $scope.shareData.headerKeys1.some(function (key) {
                         try {
                             return item[key].toLowerCase().indexOf(searchTerm.toLowerCase()) > -1;
@@ -356,7 +353,7 @@ angular.module('app', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                             //console.log(item, key, e);
                         }
                     });
-                }).map(function(val){
+                }).map(function (val) {
                     return val["A"];
                 })
             } catch (e) {
@@ -365,11 +362,11 @@ angular.module('app', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
 
             if (searchTerm) {
                 return $scope.shareData.itemList.filter(function (item, i, self) {
-                    if (!String(item[$scope.shareData.unique]).includes("divider")) {
+                    if (!String(item[$scope.shareData.unique]).indexOf("divider") > -1) {
                         return $scope.shareData.headerKeys.some(function (key) {
                             try {
-                                return (item[key].toLowerCase().indexOf(searchTerm.toLowerCase()) > -1) || (childList ? childList.some(function(val)  {
-                                    return item[key].toLowerCase().includes(val)
+                                return (item[key].toLowerCase().indexOf(searchTerm.toLowerCase()) > -1) || (childList ? childList.some(function (val) {
+                                    return item[key].toLowerCase().indexOf(val) > -1
                                 }) : false);
                             } catch (e) {
                                 //console.log(item, key, e);
@@ -425,20 +422,20 @@ angular.module('app', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
         $scope.shareData.headerPref = function (text) {
             var color = "";
             var style = null;
-            if (text.includes("[C]")) {
+            if (text.indexOf("[C]") > -1) {
                 style = true;
                 text = text.replace("[C]", "");
             }
-            if (text.includes("[r]")) {
+            if (text.indexOf("[r]") > -1) {
                 color = "red";
                 text = text.replace("[r]", "");
-            } else if (text.includes("[b]")) {
+            } else if (text.indexOf("[b]") > -1) {
                 color = "blue";
                 text = text.replace("[b]", "");
-            } else if (text.includes("[y]")) {
+            } else if (text.indexOf("[y]") > -1) {
                 color = "yellow";
                 text = text.replace("[y]", "");
-            } else if (text.includes("[g]")) {
+            } else if (text.indexOf("[g]") > -1) {
                 color = "green";
                 text = text.replace("[g]", "");
             } else {
@@ -480,7 +477,7 @@ angular.module('app', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                 })[0]);
                 var cautionList = [];
 
-                $scope.shareData.drugs.forEach(function(val, i) {
+                $scope.shareData.drugs.forEach(function (val, i) {
                     if ($scope.shareData.detail[val]) {
                         $scope.shareData.drugList.push($scope.shareData.detail[val]);
                     }
@@ -488,32 +485,32 @@ angular.module('app', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                 });
                 try {
                     var cautionItems = [];
-                    $scope.shareData.headerValues1.forEach(function(val, i) {
-                        if (val.includes("r")) {
+                    $scope.shareData.headerValues1.forEach(function (val, i) {
+                        if (val.indexOf("r") > -1) {
                             cautionItems.push($scope.shareData.headerKeys1[i]);
                         }
                     })
 
                     cautionItems1 = [];
-                    $scope.shareData.headerValues.forEach(function(val, i) {
-                        if (val.includes("r") && !val.includes("[drug")) {
+                    $scope.shareData.headerValues.forEach(function (val, i) {
+                        if (val.indexOf("r") > -1 && !val.indexOf("[drug") > -1) {
                             cautionItems1.push($scope.shareData.headerKeys[i]);
                         }
                     })
                     if (cautionItems1.length > 0) {
-                        cautionItems1.forEach(function(ele) {
+                        cautionItems1.forEach(function (ele) {
                             if ($scope.shareData.detail[ele]) {
                                 cautionList.unshift($scope.shareData.detail[ele]);
                             }
                         })
                     }
 
-                    $scope.shareData.rawArr1.forEach(function(val) {
-                        if ($scope.shareData.drugList.includes(val["drug"])) {
+                    $scope.shareData.rawArr1.forEach(function (val) {
+                        if ($scope.shareData.drugList.indexOf(val["drug"]) > -1) {
 
                             var rep = "--- " + val["infos"]["A"] + " (" + val["infos"]["B"] + ") ---"
 
-                            cautionItems.forEach(function(ele) {
+                            cautionItems.forEach(function (ele) {
                                 if (val["infos"][ele]) {
                                     cautionList.push(rep)
                                     cautionList.push(val["infos"][ele]);
@@ -561,7 +558,9 @@ angular.module('app', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
             })
         }
         $scope.shareData.getDrugInfos1 = function (drug) {
-            return $scope.shareData.rawArr1.find(function(val){return(val["drug"] === drug)})["infos"];
+            return $scope.shareData.rawArr1.find(function (val) {
+                return (val["drug"] === drug)
+            })["infos"];
         }
 
         $scope.shareData.getFlag = function () {
@@ -571,7 +570,7 @@ angular.module('app', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                 if (!item[$scope.shareData.group] && $scope.shareData.group) {
                     return true;
                 }
-                return flagList.some(function(val){
+                return flagList.some(function (val) {
                     return Number(val) === Number(item[$scope.shareData.unique]);
                 });
             }).filter(function (item, index, self) {
@@ -750,52 +749,52 @@ angular.module('app', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                 console.log('db delete error');
             }
         }
-/*
-        browsercheck();
+        /*
+                browsercheck();
 
-        function browsercheck() {
-            var message = false;
-            if (bowser.safari) {
-                message = bowser.check({
-                    safari: "11.1"
-                });
-            } else if (bowser.ios) {
-                message = bowser.check({
-                    ios: "11.3"
-                });
-            } else if (bowser.chrome) {
-                message = bowser.check({
-                    chrome: "45"
-                });
-            } else if (bowser.android) {
-                message = true;
-            } else if (bowser.msedge) {
-                message = bowser.check({
-                    msedge: "17"
-                });
-            } else if (bowser.firefox) {
-                message = bowser.check({
-                    firefox: "44"
-                });
-            } else if (bowser.opera) {
-                message = bowser.check({
-                    opera: "32"
-                });
-            } else {
-                message = false;
-            }
-            if (!message) {
-                var alertPopup = $ionicPopup.alert({
-                    title: 'Browser not supported',
-                    template: 'Your browser may not be compatible fully. Please consider to use the latest version of Chrome, Safari, Firefox or Edge.'
-                });
-                alertPopup.then(function (res) {
-                    console.log('');
-                });
-            }
+                function browsercheck() {
+                    var message = false;
+                    if (bowser.safari) {
+                        message = bowser.check({
+                            safari: "11.1"
+                        });
+                    } else if (bowser.ios) {
+                        message = bowser.check({
+                            ios: "11.3"
+                        });
+                    } else if (bowser.chrome) {
+                        message = bowser.check({
+                            chrome: "45"
+                        });
+                    } else if (bowser.android) {
+                        message = true;
+                    } else if (bowser.msedge) {
+                        message = bowser.check({
+                            msedge: "17"
+                        });
+                    } else if (bowser.firefox) {
+                        message = bowser.check({
+                            firefox: "44"
+                        });
+                    } else if (bowser.opera) {
+                        message = bowser.check({
+                            opera: "32"
+                        });
+                    } else {
+                        message = false;
+                    }
+                    if (!message) {
+                        var alertPopup = $ionicPopup.alert({
+                            title: 'Browser not supported',
+                            template: 'Your browser may not be compatible fully. Please consider to use the latest version of Chrome, Safari, Firefox or Edge.'
+                        });
+                        alertPopup.then(function (res) {
+                            console.log('');
+                        });
+                    }
 
-        }
-        */
+                }
+                */
 
     }])
 
@@ -811,7 +810,7 @@ angular.module('app', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
         $scope.shareData = sharedService;
         $scope.$on('$ionicView.enter', function (e) {
             try {
-                document.getElementById('filterBar').style.display = 'none';
+                //document.getElementById('filterBar').style.display = 'none';
             } catch (e) {
                 console.log(e);
             }
@@ -840,7 +839,7 @@ angular.module('app', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                         cellDates: true,
                     });
                     var outputpre = angular.copy(to_json(wb)["0"]);
-                    var output = outputpre.map(function(val, i) {
+                    var output = outputpre.map(function (val, i) {
                         val["__rowNum__"] = i;
                         return val;
                     })
@@ -857,7 +856,7 @@ angular.module('app', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                     var group = null;
                     var deleteKey = null;
                     var objKeys0 = Object.keys(output[0]);
-                    $scope.shareData.headerKeys = objKeys0.filter(function(val, i) {
+                    $scope.shareData.headerKeys = objKeys0.filter(function (val, i) {
                         if (val === $scope.shareData.unique) {
                             deleteKey = i;
                             return false;
@@ -865,20 +864,20 @@ angular.module('app', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                             return true;
                         }
                     })
-                    $scope.shareData.headerValues = objKeys0.map(function(key) {
+                    $scope.shareData.headerValues = objKeys0.map(function (key) {
                         return output[0][key];
-                      }).filter(function(val, i) {
+                    }).filter(function (val, i) {
                         return i !== deleteKey;
                     });
 
                     var invisibleKey = null;
-                    $scope.shareData.headerValues.forEach(function(val, i){
+                    $scope.shareData.headerValues.forEach(function (val, i) {
                         if (val === "表示") {
                             invisibleKey = $scope.shareData.headerKeys[i];
                         }
                     })
-                    console.log('invisibleKey',invisibleKey, $scope.shareData.headerValues, output)
-                    output = output.filter(function(val, i){
+                    console.log('invisibleKey', invisibleKey, $scope.shareData.headerValues, output)
+                    output = output.filter(function (val, i) {
                         return !val[invisibleKey];
                     })
                     console.log(invisibleKey, output)
@@ -886,20 +885,20 @@ angular.module('app', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                     $scope.shareData.itemList = $scope.shareData.rawList;
                     $scope.shareData.drugs = []; // add
                     console.log(invisibleKey, output, $scope.shareData.rawList)
-                    $scope.shareData.headerValues.forEach(function(val, i) {
+                    $scope.shareData.headerValues.forEach(function (val, i) {
                         try {
-                            if (val.includes("[T]") && !$scope.shareData.term) {
+                            if (val.indexOf("[T]") > -1 && !$scope.shareData.term) {
                                 $scope.shareData.term = $scope.shareData.headerKeys[i];
                                 $scope.shareData.headerValues[i] = val.replace("[T]", "");
-                            } else if (val.includes("[S]") && !$scope.shareData.subterm) {
+                            } else if (val.indexOf("[S]") > -1 && !$scope.shareData.subterm) {
                                 $scope.shareData.subterm = $scope.shareData.headerKeys[i];
                                 $scope.shareData.headerValues[i] = val.replace("[S]", "");
-                            } else if (val.includes("[G]") && !$scope.shareData.group) {
+                            } else if (val.indexOf("[G]") > -1 && !$scope.shareData.group) {
                                 $scope.shareData.group = $scope.shareData.headerKeys[i];
                                 group = $scope.shareData.headerKeys[i];
                                 $scope.shareData.headerValues[i] = val.replace("[G]", "");
                             }
-                            if (val.includes("[drug")) { // add
+                            if (val.indexOf("[drug") > -1) { // add
                                 $scope.shareData.drugs.push($scope.shareData.headerKeys[i]); // add
                             } // add
 
@@ -925,15 +924,15 @@ angular.module('app', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                             return self.map(function (val) {
                                 return val;
                             }).indexOf(x) === i;
-                        }).sort(function(a, b){
+                        }).sort(function (a, b) {
                             return a.localeCompare(b);
                         });
 
                         var divAdded = [];
-                        $scope.shareData.rawList.sort(function(a, b) {
+                        $scope.shareData.rawList.sort(function (a, b) {
                             return a[group].localeCompare(b[group]) || a[$scope.shareData.term].localeCompare(b[$scope.shareData.term]);
                         });
-                        $scope.shareData.groupList(function(item) {
+                        $scope.shareData.groupList(function (item) {
                             var pos = $scope.shareData.itemList.map(function (element) {
                                 return element[group];
                             }).indexOf(item);
@@ -947,7 +946,7 @@ angular.module('app', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                             $scope.shareData.rawList.splice(divAdded[i], 0, insert);
                         }
                     } else {
-                        $scope.shareData.rawList.sort(function(a, b) {
+                        $scope.shareData.rawList.sort(function (a, b) {
                             return a[$scope.shareData.term].localeCompare(b[$scope.shareData.term]);
                         });
                         $scope.shareData.groupList = [];
@@ -978,28 +977,28 @@ angular.module('app', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                     var lookupValue = 0;
 
                     $scope.shareData.headerKeys1 = Object.keys(output1[0]);
-                    $scope.shareData.headerValues1 = $scope.shareData.headerKeys1.map(function(e) {
+                    $scope.shareData.headerValues1 = $scope.shareData.headerKeys1.map(function (e) {
                         return output1[0][e]
-                      });
+                    });
                     $scope.shareData.lookupKey = $scope.shareData.headerKeys1[lookupValue];
                     $scope.shareData.rawList1 = angular.copy(output1.slice(1));
                     $scope.shareData.itemList1 = $scope.shareData.rawList1;
 
-                    $scope.shareData.rawArr1 = $scope.shareData.rawList1.map(function(val, i){
+                    $scope.shareData.rawArr1 = $scope.shareData.rawList1.map(function (val, i) {
                         return {
                             drug: val[$scope.shareData.lookupKey],
                             infos: val
                         }
                     })
-                    
+
                     console.log($scope.shareData.rawArr1, $scope.shareData.lookupKey, $scope.shareData.headerKeys1, lookupValue)
-                    $scope.shareData.headerValues1.forEach(function(val, i) {
+                    $scope.shareData.headerValues1.forEach(function (val, i) {
                         try {
-                            if (val.includes("[T]")) {
+                            if (val.indexOf("[T]") > -1) {
                                 $scope.shareData.headerValues1[i] = val.replace("[T]", "");
-                            } else if (val.includes("[S]")) {
+                            } else if (val.indexOf("[S]") > -1) {
                                 $scope.shareData.headerValues1[i] = val.replace("[S]", "");
-                            } else if (val.includes("[G]")) {
+                            } else if (val.indexOf("[G]") > -1) {
                                 $scope.shareData.headerValues1[i] = val.replace("[G]", "");
                             }
                         } catch (e) {
@@ -1007,7 +1006,7 @@ angular.module('app', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                         }
                     });
 
-                    $scope.shareData.rawList1.sort(function(a, b) {
+                    $scope.shareData.rawList1.sort(function (a, b) {
                         return a[$scope.shareData.lookupKey].localeCompare(b[$scope.shareData.lookupKey]);
                     });
 
@@ -1088,7 +1087,7 @@ angular.module('app', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
         $scope.shareData = sharedService;
         $scope.$on('$ionicView.enter', function (e) {
             try {
-                document.getElementById('filterBar').style.display = 'none';
+                //document.getElementById('filterBar').style.display = 'none';
             } catch (e) {
                 console.log(e);
             }
