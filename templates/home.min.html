@@ -1,1 +1,58 @@
-<ion-view ng-controller="HomeCtrl"><ion-header-bar class="bar bar-header bar-positive"><div class="button button-icon ion-navicon" ng-click="toggleLeft()"></div><h1 class="title" ng-class="{'title-padding-right': shareData.langJa}" ng-bind-html="groupTitle[shareData.lang]"></h1><div class="button button-icon" style="padding:0"><div class="button button-icon ion-ios-search" ng-click="showFilterBar()"></div></div></ion-header-bar><ion-side-menus><ion-side-menu-content on-drag-right="freezeScroll()" on-release="enableScroll()"><div class="bar bar-footer"><div class="title">Title</div></div><ion-content delegate-handle="mainScroll"><div class="list"><a class="list-items-item {{item[shareData.group] ? 'item item-icon-left' : (shareData.group ? 'item-divider' : 'item item-icon-left')}}" collection-repeat="item in shareData.filteredList()" collection-item-height="shareData.getItemHeight(item)" collection-item-width="'100%'" ng-click="getItem(item[shareData.unique], $event)" style="width:100%" ng-style="{'height': shareData.getItemHeight(item) + 1 + 'px'}"><div class="item-divider-overflow"><p ng-bind-html="shareData.encode(item, [shareData.term]) | highlight: shareData.search"></p><p class="item-subtitle" ng-if="shareData.subterm" ng-bind-html="shareData.encode(item, [shareData.subterm]) | highlight: shareData.search"></p></div><div class="container-flag"><i class="button button-clear icon ion-ios-flag" ng-class="{'red-flag': shareData.flags[item[shareData.unique]]}" ng-click="flagging(item[shareData.unique], $event)"></i></div></a></div><div ng-if="shareData.filteredList().length < 1" style="text-align:center;margin-top:80px"><div ng-if="shareData.lang ==='en'">No items found in</div><div><b>{{shareData.menuSelected === "____flag____" ? "フラグ付き" : (shareData.menuSelected ? shareData.menuSelected : "すべて")}}</b></div><div ng-if="shareData.lang ==='ja'">のなかに該当するものはありません</div></div></ion-content></ion-side-menu-content><ion-side-menu side="left" expose-aside-when="large"><ion-content><!-- <ion-item class="item-divider">--><ion-item ng-click="shareData.getGroupItems(null)" class="menu" ng-class="{'selected-menu': !shareData.menuSelected}">{{shareData.local[shareData.lang]['all']}}</ion-item><ion-item ng-click="shareData.getFlag()" class="menu" ng-class="{'selected-menu': shareData.menuSelected === '____flag____'}"><i class="icon ion-ios-flag red-flag head"></i>{{shareData.local[shareData.lang]['flagged']}} ({{shareData.flagNum}})</ion-item><ion-item ng-repeat="item in shareData.groupList" ng-click="shareData.getGroupItems(item)" ng-bind-html="shareData.encode(item, null)" ng-if="shareData.groupList.length > 0" class="menu" ng-class="{'selected-menu': (shareData.menuSelected === item)} "></ion-item></ion-content></ion-side-menu></ion-side-menus></ion-view>
+<ion-view ng-controller="HomeCtrl">
+    <ion-header-bar class="bar bar-header bar-positive">
+        <div class="button button-icon ion-navicon" ng-click="toggleLeft()"></div>
+        <h1 class="title" ng-class="{'title-padding-right': shareData.langJa}"
+            ng-bind-html="groupTitle[shareData.lang]"></h1>
+        <div class="button button-icon" style="padding:0">
+            <div class="button button-icon ion-ios-search" ng-click="showFilterBar()"></div>
+        </div>
+    </ion-header-bar>
+    <ion-side-menus>
+        <ion-side-menu-content on-drag-right="freezeScroll()" on-release="enableScroll()">
+            <div class="bar bar-footer">
+                <div class="title">Title</div>
+            </div>
+            <ion-content delegate-handle="mainScroll">
+                <div class="list"><a
+                        class="list-items-item {{item[shareData.group] ? 'item item-icon-left' : (shareData.group ? 'item-divider' : 'item item-icon-left')}}"
+                        collection-repeat="item in shareData.filteredList()"
+                        collection-item-height="shareData.getItemHeight(item)" collection-item-width="'100%'"
+                        ng-click="getItem(item[shareData.unique], $event)" style="width:100%"
+                        ng-style="{'height': shareData.getItemHeight(item) + 1 + 'px'}">
+                        <div class="item-divider-overflow">
+                            <p ng-bind-html="shareData.encode(item, [shareData.term]) | highlight: shareData.search">
+                            </p>
+                            <p class="item-subtitle" ng-if="shareData.subterm"
+                                ng-bind-html="shareData.encode(item, [shareData.subterm]) | highlight: shareData.search">
+                            </p>
+                        </div>
+                        <div class="container-flag"><i class="button button-clear icon ion-ios-flag"
+                                ng-class="{'red-flag': shareData.flags[item[shareData.unique]]}"
+                                ng-click="flagging(item[shareData.unique], $event)"></i></div>
+                    </a></div>
+                <div ng-if="shareData.filteredList().length < 1" style="text-align:center;margin-top:80px">
+                    <div ng-if="shareData.lang ==='en'">No items found in</div>
+                    <div>
+                        <b>{{shareData.menuSelected === "____flag____" ? "フラグ付き" : (shareData.menuSelected ? shareData.menuSelected : "すべて")}}</b>
+                    </div>
+                    <div ng-if="shareData.lang ==='ja'">のなかに該当するものはありません</div>
+                </div>
+            </ion-content>
+        </ion-side-menu-content>
+        <ion-side-menu side="left" expose-aside-when="large">
+            <ion-content>
+                <!-- <ion-item class="item-divider">-->
+                <ion-item ng-click="shareData.getGroupItems(null)" class="menu"
+                    ng-class="{'selected-menu': !shareData.menuSelected}">{{shareData.local[shareData.lang]['all']}}
+                </ion-item>
+                <ion-item ng-click="shareData.getFlag()" class="menu"
+                    ng-class="{'selected-menu': shareData.menuSelected === '____flag____'}"><i
+                        class="icon ion-ios-flag red-flag head"></i>{{shareData.local[shareData.lang]['flagged']}}
+                    ({{shareData.flagNum}})</ion-item>
+                <ion-item ng-repeat="item in shareData.groupList" ng-click="shareData.getGroupItems(item)"
+                    ng-bind-html="shareData.encode(item, null)" ng-if="shareData.groupList.length > 0" class="menu"
+                    ng-class="{'selected-menu': (shareData.menuSelected === item)} "></ion-item>
+            </ion-content>
+        </ion-side-menu>
+    </ion-side-menus>
+</ion-view>
