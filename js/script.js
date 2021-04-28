@@ -932,7 +932,7 @@ angular.module('app', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                         $scope.shareData.rawList.sort(function (a, b) {
                             return a[group].localeCompare(b[group]) || a[$scope.shareData.term].localeCompare(b[$scope.shareData.term]);
                         });
-                        $scope.shareData.groupList(function (item) {
+                        $scope.shareData.groupList.forEach(function (item) {
                             var pos = $scope.shareData.itemList.map(function (element) {
                                 return element[group];
                             }).indexOf(item);
