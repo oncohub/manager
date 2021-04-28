@@ -530,6 +530,7 @@ angular.module('app', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
         }
 
         $scope.shareData.getGroupItems = function (str) {
+            console.log('str', str);
             if (str) {
                 $scope.shareData.menuSelected = str;
                 $scope.groupTitle = {
@@ -545,6 +546,7 @@ angular.module('app', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                 });
 
             } else {
+                console.log('null', str);
                 $scope.shareData.menuSelected = null;
                 $scope.groupTitle = {
                     en: $scope.shareData.local['en']['all'],
