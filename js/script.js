@@ -558,9 +558,9 @@ angular.module('app', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
             })
         }
         $scope.shareData.getDrugInfos1 = function (drug) {
-            return $scope.shareData.rawArr1.find(function (val) {
+            return $scope.shareData.rawArr1.filter(function (val) {
                 return (val["drug"] === drug)
-            })["infos"];
+            })[0]["infos"];
         }
 
         $scope.shareData.getFlag = function () {
