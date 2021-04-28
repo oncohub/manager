@@ -7,25 +7,7 @@ angular.module('app', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
         }
 
         $scope.shareData.secondaryOn = true; //bilingual setting
-
-        $scope.$on('$ionicView.beforeLeave', function (e) {
-            try {
-               // document.getElementById('filterBar').style.display = 'none';
-            } catch (e) {
-                console.log(e);
-            }
-        });
-        $scope.$on('$ionicView.beforeEnter', function (e) {
-            try {
-                $scope.shareData.flagNum = Object.keys($scope.shareData.flags).length;
-                //document.getElementById('filterBar').style.display = 'inherit';
-            } catch (e) {
-                console.log(e);
-            }
-            //$scope.shareData.flags = {};
-
-        });
-        $scope.$on('$ionicView.afterEnter', function () {
+        $scope.$on('$ionicView.loaded', function (e) {
             /*
                         var getFirstBrowserLanguage = function () {
                             var nav = window.navigator,
@@ -67,7 +49,7 @@ angular.module('app', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                         }
                         */
             //init(test);
-
+console.log('loaded', e)
             var dbName = 'kw_DB';
             var storeName = 'kw_storage';
 
@@ -75,6 +57,24 @@ angular.module('app', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
             getDb('contents');
             getDb('contents1');
         });
+        $scope.$on('$ionicView.beforeLeave', function (e) {
+            try {
+               // document.getElementById('filterBar').style.display = 'none';
+            } catch (e) {
+                console.log(e);
+            }
+        });
+        $scope.$on('$ionicView.beforeEnter', function (e) {
+            try {
+                $scope.shareData.flagNum = Object.keys($scope.shareData.flags).length;
+                //document.getElementById('filterBar').style.display = 'inherit';
+            } catch (e) {
+                console.log(e);
+            }
+            //$scope.shareData.flags = {};
+
+        });
+
 
 
         $scope.freezeScroll = function () {
@@ -878,15 +878,14 @@ angular.module('app', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                             invisibleKey = $scope.shareData.headerKeys[i];
                         }
                     })
-                    console.log('invisibleKey', invisibleKey, $scope.shareData.headerValues, output)
                     output = output.filter(function (val, i) {
                         return !val[invisibleKey];
                     })
-                    console.log(invisibleKey, output)
+
                     $scope.shareData.rawList = angular.copy(output.slice(1));
                     $scope.shareData.itemList = $scope.shareData.rawList;
                     $scope.shareData.drugs = []; // add
-                    console.log(invisibleKey, output, $scope.shareData.rawList)
+
                     $scope.shareData.headerValues.forEach(function (val, i) {
                         try {
                             if (val.indexOf("[T]") > -1 && !$scope.shareData.term) {
@@ -993,7 +992,6 @@ angular.module('app', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                         }
                     })
 
-                    console.log($scope.shareData.rawArr1, $scope.shareData.lookupKey, $scope.shareData.headerKeys1, lookupValue)
                     $scope.shareData.headerValues1.forEach(function (val, i) {
                         try {
                             if (val.indexOf("[T]") > -1) {
@@ -1011,8 +1009,6 @@ angular.module('app', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                     $scope.shareData.rawList1.sort(function (a, b) {
                         return a[$scope.shareData.lookupKey].localeCompare(b[$scope.shareData.lookupKey]);
                     });
-
-                    console.log('$scope.shareData.rawList1', $scope.shareData.rawList1)
 
                 };
                 reader.readAsArrayBuffer(f);
