@@ -49,13 +49,7 @@ angular.module('app', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                         }
                         */
             //init(test);
-console.log('loaded', e)
-            var dbName = 'kw_DB';
-            var storeName = 'kw_storage';
 
-            getDb('flags');
-            getDb('contents');
-            getDb('contents1');
         });
         $scope.$on('$ionicView.beforeLeave', function (e) {
             try {
@@ -75,7 +69,12 @@ console.log('loaded', e)
 
         });
 
+        var dbName = 'kw_DB';
+        var storeName = 'kw_storage';
 
+        getDb('flags');
+        getDb('contents');
+        getDb('contents1');
 
         $scope.freezeScroll = function () {
             $ionicScrollDelegate.$getByHandle('mainScroll').getScrollView().options.scrollingY = false;
@@ -635,12 +634,7 @@ console.log('loaded', e)
             });
         }
 
-        var dbName = 'kw_DB';
-        var storeName = 'kw_storage';
 
-        getDb('flags');
-        getDb('contents');
-        getDb('contents1');
 
 
         $scope.shareData.setDb = function (setname, value) {
