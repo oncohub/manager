@@ -21,11 +21,16 @@ angular.module('app', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
 
         });
         $scope.$on('$ionicView.beforeLeave', function (e) {
-
+            try {
+                document.getElementById('filterBar').style.display = 'none';
+            } catch (e) {
+                console.log(e);
+            }
         });
         $scope.$on('$ionicView.beforeEnter', function (e) {
             try {
                 $scope.shareData.flagNum = Object.keys($scope.shareData.flags).length;
+                document.getElementById('filterBar').style.display = 'inherit';
             } catch (e) {
                 console.log(e);
             }
@@ -737,7 +742,7 @@ angular.module('app', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
         $scope.shareData = sharedService;
         $scope.$on('$ionicView.enter', function (e) {
             try {
-                //document.getElementById('filterBar').style.display = 'none';
+                document.getElementById('filterBar').style.display = 'none';
             } catch (e) {
                 console.log(e);
             }
@@ -966,7 +971,11 @@ angular.module('app', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
     .controller('InfoCtrl', ["$scope", "sharedService", "$ionicPopup", function ($scope, sharedService, $ionicPopup) {
         $scope.shareData = sharedService;
         $scope.$on('$ionicView.enter', function (e) {
-
+            try {
+                document.getElementById('filterBar').style.display = 'none';
+            } catch (e) {
+                console.log(e);
+            }
         });
 
         $scope.shareData.unregister = function () {

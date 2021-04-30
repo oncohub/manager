@@ -12,7 +12,7 @@
             <div class="bar bar-footer">
                 <div class="title">Title</div>
             </div>
-            <ion-content delegate-handle="mainScroll">
+            <ion-content delegate-handle="mainScroll" overflow-scroll="true">
                 <div class="list"><a
                         class="list-items-item {{item[shareData.group] ? 'item item-icon-left' : (shareData.group ? 'item-divider' : 'item item-icon-left')}}"
                         collection-repeat="item in shareData.filteredList()"
@@ -40,17 +40,17 @@
             </ion-content>
         </ion-side-menu-content>
         <ion-side-menu side="left" expose-aside-when="large">
-            <ion-content>
+            <ion-content overflow-scroll="true">
                 <!-- <ion-item class="item-divider">-->
-                <ion-item ng-click="shareData.getGroupItems(null)" class="menu"
+                <ion-item ng-click="shareData.getGroupItems(null)" class="menu-tab"
                     ng-class="{'selected-menu': !shareData.menuSelected}">{{shareData.local[shareData.lang]['all']}}
                 </ion-item>
-                <ion-item ng-click="shareData.getFlag()" class="menu"
+                <ion-item ng-click="shareData.getFlag()" class="menu-tab"
                     ng-class="{'selected-menu': shareData.menuSelected === '____flag____'}"><i
                         class="icon ion-ios-flag red-flag head"></i>{{shareData.local[shareData.lang]['flagged']}}
                     ({{shareData.flagNum}})</ion-item>
                 <ion-item ng-repeat="item in shareData.groupList" ng-click="shareData.getGroupItems(item)"
-                    ng-bind-html="shareData.encode(item, null)" ng-if="shareData.groupList.length > 0" class="menu"
+                    ng-bind-html="shareData.encode(item, null)" ng-if="shareData.groupList.length > 0" class="menu-tab"
                     ng-class="{'selected-menu': (shareData.menuSelected === item)} "></ion-item>
             </ion-content>
         </ion-side-menu>
