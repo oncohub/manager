@@ -11,7 +11,7 @@
             </h4>
         </div>
         <div class="expandable-content padding-top" ng-repeat="key in shareData.headerKeys"
-            ng-if="key !== shareData.term && shareData.drugs.indexOf(key) < 0">
+            ng-if="key !== shareData.term && shareData.drugs.indexOf(key) < 0 && shareData.detail[key]">
             <div ng-if="shareData.headerValues[$index] !== '[LOOKUP]'"
                 ng-class="shareData.headerPref(shareData.headerValues[$index])[1]">
                 <div class="padding" ng-class="shareData.headerPref(shareData.headerValues[$index])[1]"

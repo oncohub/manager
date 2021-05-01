@@ -511,7 +511,7 @@ angular.module('app', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
             $ionicSideMenuDelegate.toggleLeft();
             $timeout(function () {
                 $ionicScrollDelegate.$getByHandle('mainScroll').scrollTop(false);
-            })
+            });
         }
         $scope.shareData.getDrugInfos1 = function (drug) {
             console.log(drug)
