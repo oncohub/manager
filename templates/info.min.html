@@ -42,5 +42,14 @@
         <ion-item class="item-about item-icon-right" ng-click="shareData.unregister()">Unregister / Remove cache <a><i
                     class="icon ion-ios-trash-outline" style="color:#666"></i></a></ion-item>
         <div class="item item-divider" style="border-bottom:0"></div>
+        <div class="padding">
+        <h4> initContents</h4>
+        <ion-item class="padding" style="margin:16px 0;background-color:#ffe6ea">
+            <textarea ng-bind="shareData.initContents" style="width:100%;height:100px;background-color:#ffe6ea"
+                placeholder="Enter more information here..."></textarea></ion-item>
+                <h4> initContents1</h4>
+                <ion-item class="padding" style="margin:16px 0;background-color:#ffe6ea">
+                    <textarea ng-bind="shareData.initContents1" style="width:100%;height:100px;background-color:#ffe6ea"
+                        placeholder="Enter more information here..."></textarea></ion-item></div>
     </ion-content>
 </ion-view>

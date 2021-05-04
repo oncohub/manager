@@ -42,6 +42,7 @@ angular.module('app', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
         getDb('flags');
         getDb('contents');
         getDb('contents1');
+        getDb('updated');
 
         $scope.freezeScroll = function () {
             $ionicScrollDelegate.$getByHandle('mainScroll').getScrollView().options.scrollingY = false;
@@ -108,6 +109,7 @@ angular.module('app', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
             $scope.shareData.term = null;
             $scope.shareData.subterm = null;
             $scope.shareData.group = null;
+            $scope.shareData.initContents = JSON.stringify(output);
             var group = null;
             var deleteKey = null;
             try {
@@ -216,6 +218,7 @@ angular.module('app', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
             //////////////////////////////
             ////// data loading
             //////////////////////////////
+            $scope.shareData.initContents1 = JSON.stringify(output1);
             $scope.shareData.term1 = null;
             $scope.shareData.subterm1 = null;
             $scope.shareData.group1 = null;
@@ -315,7 +318,7 @@ angular.module('app', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
 
             if (searchTerm) {
                 return $scope.shareData.itemList.filter(function (item, i, self) {
-                    if (!String(item[$scope.shareData.unique]).indexOf("divider") > -1) {
+                    if (!(String(item[$scope.shareData.unique]).indexOf("divider") > -1)) {
                         return $scope.shareData.headerKeys.some(function (key) {
                             try {
                                 return (item[key].toLowerCase().indexOf(searchTerm.toLowerCase()) > -1) || (childList ? childList.some(function (val) {
@@ -331,7 +334,6 @@ angular.module('app', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                 }).filter(function (item, index, self) {
                     try {
                         if ($scope.shareData.group) {
-                            console.log(item, $scope.shareData.group, $scope.shareData.term, self[index + 1])
                             return (!item[$scope.shareData.group] && item[$scope.shareData.term] === self[index + 1][$scope.shareData.group]) || item[$scope.shareData.group];
                         } else {
                             return true;
@@ -635,7 +637,13 @@ angular.module('app', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                                 //$scope.shareData.flagNum = Object.keys($scope.shareData.flags).length;
                             } catch (e) {
                                 console.log('error', e);
-                                init(test);
+                                init(initContents);
+                                try {
+                                    $scope.shareData.updateTime = "デフォルトのままです";
+                                    $scope.shareData.setDb('updated', $scope.shareData.updateTime);
+                                } catch (e) {
+
+                                }
                             }
                             // code block
                             break;
@@ -645,13 +653,23 @@ angular.module('app', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                                 //$scope.shareData.flagNum = Object.keys($scope.shareData.flags).length;
                             } catch (e) {
                                 console.log('error', e);
-                                //init(test);
+                                init1(initContents1);
                             }
                             // code block
                             break;
+                            case "updated":
+                                try {
+                                    $scope.shareData.updateTime = event.target.result.contents;
+                                    //$scope.shareData.flagNum = Object.keys($scope.shareData.flags).length;
+                                } catch (e) {
+                                    console.log('error', e);
+                                }
+                                // code block
+                                break;
                         default:
                             // code block
                     }
+
                 }
 
                 getReq.onerror = function (event) {
@@ -931,6 +949,14 @@ angular.module('app', ['ionic', 'jett.ionic.filter.bar', 'ui.router'])
                     $scope.shareData.rawList1.sort(function (a, b) {
                         return a[$scope.shareData.lookupKey].localeCompare(b[$scope.shareData.lookupKey]);
                     });
+                    if (data) {
+                        try {
+                            $scope.shareData.updateTime = String(new Date());
+                            $scope.shareData.setDb('updated', $scope.shareData.updateTime);
+                        } catch (e) {
+
+                        }
+                    }
 
                 };
                 reader.readAsArrayBuffer(f);
